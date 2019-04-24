@@ -18,7 +18,7 @@
 			}
 
 			$fulfillment = array(
-   			    "fulfillmentText" => $response;
+   			    "fulfillmentText" => $response
    			);
    			echo(json_encode($fulfillment));
 			break;

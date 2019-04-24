@@ -4,14 +4,21 @@
 	$requestJson = json_decode($request, true);
 
 	$intentDisplayName = $requestJson['queryResult']['intent']['displayName'];
+	$params = $requestJson['queryResult']['parameters'];
 	switch ($intentDisplayName) {
 		case 'partBrand':
 			
 
 			break;
 		case 'search_part_number':
+			if(isset($params['part_number'])) {
+				$response = "Estas buscando el parte ".$params['part_number']."?";
+			} else {
+				$response = "No entendi tu pregunta";
+			}
+
 			$fulfillment = array(
-   			    "fulfillmentText" => "si funciono"
+   			    "fulfillmentText" => $response;
    			);
    			echo(json_encode($fulfillment));
 			break;

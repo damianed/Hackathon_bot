@@ -11,7 +11,7 @@
 			break;
 		case 'search_part_number':
 			$fulfillment = array(
-   			    "fulfillmentText" => "si funciono";
+   			    "fulfillmentText" => "si funciono"
    			);
    			echo(json_encode($fulfillment));
 			break;

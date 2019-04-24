@@ -27,16 +27,16 @@
 				$storeData['parts'] = [];
 				foreach ($parts as $part) {
 					$partName = translate($part['partName'], 'en-es');
-					$storeData['parts'][] = ['partName' => $partName, 'price' => $part['price']['list']], 'quantity' => $part['availability']['quantity']];
+					$storeData['parts'][] = ['partName' => $partName, 'price' => $part['price']['list'], 'quantity' => $part['availability']['quantity']];
 				}
 				$partsByStore[] = $storeData;
 			}
 
-			$response = "Ahorita tenemos disponibles siguientes piezas disponibles en estas tiendas: ";
+			$response = "Ahorita tenemos disponibles siguientes piezas disponibles en estas tiendas: \n";
 			foreach ($partsByStore as $storeData) {
-				$response .= "En la tienda de " . $storeData['supplierName'] ." que esta en ". $storeData['name'].":";
+				$response .= "En la tienda de " . $storeData['supplierName'] ." que esta en ". $storeData['name'].": \n";
 				foreach ($storeData['parts'] as $part) {
-					$response .= 'Hay '.$part['quantity'].' '.$part['partName']. ' con precio de '. $part['price'];
+					$response .= 'Hay '.$part['quantity'].' '.$part['partName']. ' con precio de '. $part['price']."\n";
 				}
 			}
 

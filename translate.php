@@ -1,6 +1,10 @@
 <?php 
 	$apiKey = "trnsl.1.1.20190424T160245Z.9c5adc3a0b583d0e.cdbc585449976b1d6f3bb2770b84d745f3b67620";
 
+
+	// $text: the text you want to translate
+	// $lang: The translation direction. Example: es-en
+	// Language codes: https://tech.yandex.com/translate/doc/dg/concepts/api-overview-docpage/#api-overview__languages
 	function translate($text, $lang)
 	{
 		global $apiKey;

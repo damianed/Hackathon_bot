@@ -30,6 +30,7 @@
 					$storeData['parts'][] = ['partName' => $partName, 'price' => $part['price']['list'], 'quantity' => $part['availability']['quantity']];
 				}
 				$partsByStore[] = $storeData;
+				break;
 			}
 
 			$response = "Ahorita tenemos disponibles siguientes piezas disponibles en estas tiendas: \n";

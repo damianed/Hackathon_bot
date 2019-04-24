@@ -32,25 +32,21 @@
 				$partsByStore[] = $storeData;
 				break;
 			}
-			$response = "Ahorita tenemos disponibles siguientes piezas disponibles en estas tiendas: \n";
-			$fulfillment = array(
-   			    "fulfillmentText" => $response
-   			);
-   			echo(json_encode($fulfillment));
-				die();
 
+			$response = "Ahorita tenemos disponibles siguientes piezas disponibles en estas tiendas: \n";
 			foreach ($partsByStore as $storeData) {
 				$response .= "En la tienda de " . $storeData['supplierName'] ." que esta en ". $storeData['name'].": \n";
 				foreach ($storeData['parts'] as $part) {
 					$response .= 'Hay '.$part['quantity'].' '.$part['partName']. ' con precio de '. $part['price']."\n";
 				}
 			}
-
+			
 
 			$fulfillment = array(
-   			    "fulfillmentText" => $response
-   			);
-   			echo(json_encode($fulfillment));
+				"fulfillmentText" => $response
+			);
+			echo(json_encode($fulfillment));
+			die();
 			break;
 		case 'engine':
 			# code ...

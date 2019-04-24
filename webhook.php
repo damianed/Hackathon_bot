@@ -32,8 +32,13 @@
 				$partsByStore[] = $storeData;
 				break;
 			}
-
 			$response = "Ahorita tenemos disponibles siguientes piezas disponibles en estas tiendas: \n";
+			$fulfillment = array(
+   			    "fulfillmentText" => $response
+   			);
+   			echo(json_encode($fulfillment));
+				die();
+
 			foreach ($partsByStore as $storeData) {
 				$response .= "En la tienda de " . $storeData['supplierName'] ." que esta en ". $storeData['name'].": \n";
 				foreach ($storeData['parts'] as $part) {

@@ -91,10 +91,10 @@
 				$response = "No me mandaste ninguna version, ¿Cual es la version de tu carro?";
 			}
 			else {
-				$solicitedYear = $ouputContexts[2]['parameters']['year'];
-				$solicitedMakeId  = $ouputContexts[2]['parameters']['makeId'];
-				$solicitedModelId  = $ouputContexts[2]['parameters']['modelId'];
-				$solicitedSubmodel = $ouputContexts[2]['parameters']['submodel'];
+				$solicitedYear = $ouputContexts[1]['parameters']['year'];
+				$solicitedMakeId  = $ouputContexts[1]['parameters']['makeId'];
+				$solicitedModelId  = $ouputContexts[1]['parameters']['modelId'];
+				$solicitedSubmodel = $ouputContexts[1]['parameters']['submodel'];
 				$submodels = $partsTech->getSubModels($solicitedYear, $solicitedMakeId, $solicitedModelId, "");
 				foreach ($submodels as $submodel) {
 					$submodelName = $submodel["submodelName"];
@@ -129,7 +129,7 @@
 			}
 
 			$fulfillment = array(
-				"fulfillmentText" => $availableEngines
+				"fulfillmentText" => $response
 			);
 			echo(json_encode($fulfillment));
 			break;

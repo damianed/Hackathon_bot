@@ -126,8 +126,7 @@
 					$responseMsg['store'] ='';
 					foreach ($stores as $store) {
 						$storeId = $store['id'];
-						$parts = $partsTech->requestQuote($searchParams, $storeId);
-						die(json_encode($parts));
+						$parts = $partsTech->requestQuote($searchParams, $storeId)['parts'];
 						if(sizeof($parts) > 0) {
 							$storeData['parts'] = [];
 							$responseMsg['store'] .= "En la tienda de " . $store['supplierName'] ." que esta en ". $store['name']." tienen : \n";

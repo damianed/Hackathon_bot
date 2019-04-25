@@ -123,8 +123,8 @@
 				}
 				else {
 					$availableEngines = $partsTech->getModels($solicitedYear, $makeId, $modelId, $submodelId);
-					foreach ($availableEngines as $engine) {
-						$response = 'Que motor tiene tu carro: ';
+					$response = 'Que motor tiene tu carro: ';
+					foreach ($availableEngines as $key => $engine) {
 						if ($key < count($availableEngines)) {
 							$response .= $engine['engineName'].', ';
 						}

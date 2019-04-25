@@ -58,7 +58,7 @@
 			$makeName = $params['make'];
 			$modelName = $params['model'];
 			$makeId = 0;
-			$allMakes = $partsTech->getMakers($year);
+			$allMakes = $partsTech->getMakes($year);
 			foreach($allMakes as $make){
 				if($make["makeName"] == $makeName){
 					$makeId = $make["makeId"];

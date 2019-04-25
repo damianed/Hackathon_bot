@@ -90,7 +90,7 @@
 			$makeName = $params['make'];
 			$modelName = $params['model'];
 			$makeId = 0;
-			$allMakes = $partsTech->getMakes($year);
+			$allMakes = $partsTech->getMakes($year, '', '');
 			foreach($allMakes as $make){
 				if($make["makeName"] == $makeName){
 					$makeId = $make["makeId"];
@@ -105,7 +105,7 @@
 				break;
 			}
 
-			$models = $partsTech->getModels($year, $makeId);
+			$models = $partsTech->getModels($year, $makeId, '');
 			$modelId = 0;
 			foreach($models as $model){
 				if($model["modelName"] == $modelName){
@@ -120,14 +120,14 @@
 				echo(json_encode($fulfillment));
 				break;
 			}
-			$subModels = $partsTech->getSubModels($year, $make, $modelId);
+			$subModels = $partsTech->getSubModels($year, $make, $modelId, '');
 			$response = "¿De cual versión es: ";
-			foreach($subModels as $index=>$submodel){
-				$response .= "$subModel";
+			foreach($subModels as $index=>$subModel){
+				$response .= $subModel["submodelName"];
 				if($index < sizeof($subModels) - 2){
 					$response .= ", ";
 				}else if($index < sizeof($subModels)){
-					$respose .= "o ";
+					$response .= "o ";
 				}
 			}
 			$response .= "?";

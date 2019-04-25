@@ -30,7 +30,7 @@
 				$parts = $partsTech->requestQuote($searchParams, $storeId)['parts'];
 				if(sizeof($parts) > 0) {
 					$storeData['parts'] = [];
-					$responseMsg['store'] .= "En la tienda de " . $store['supplierName'] ." que esta en ". $store['name']." tienen : \n";
+					$responseMsg['store'][] = "En la tienda de " . $store['supplierName'] ." que esta en ". $store['name']." tienen : \n";
 					foreach ($parts as $part) {
 						$partName = $part['partName'];
 						$quantity = $part['quantity'];
@@ -54,19 +54,19 @@
 
 			if($responseMsg['store'] == '') {
 					$response = "Lo siento, pero el producto con ese numero de parte no esta disponible por el momento";
+					$fulfillment = array(
+						"fulfillmentText" => $response
+					);
 			} else {
 				$texts = [];
 				foreach ($responseMsg['store'] as $text) {
-					$texts[] = ['text' => $text];
+					$texts[] = ['text' => ['text' => [$text]]];
 				}
-				$response = [
-					'text' => $texts
-				];
+				$fulfillment = array(
+					"fulfillmentMessages" => $texts
+				);
 			}
 
-			$fulfillment = array(
-				"fulfillmentText" => $response
-			);
 			echo json_encode($fulfillment);
 			break;
 		case 'engine':
@@ -81,10 +81,10 @@
 				$solicitedMakeId  = $outputContexts[1]['parameters']['makeId'];
 				$solicitedModelId  = $outputContexts[1]['parameters']['modelId'];
 				$solicitedSubmodelId = $outputContexts[1]['parameters']['submodelId'];
-				$solicitedEngine = $outputContexts[1]['parameters']['engine'];
+				$solicitedEngine = $params['engine'];
 				$engines = $partsTech->getEngines($solicitedYear, $solicitedMakeId, $solicitedModelId, $solicitedSubmodelId);
 				foreach ($engines as $engine) {
-					$engineName = $engine["engineName"];
+					$engineName = join(' ', explode('  ',$engine["engineName"]));
 					if ($solicitedEngine == $engineName) {
 						$engineId  = $engine['engineId'];
 						$engineParams = $engine['engineParams'];
@@ -107,12 +107,13 @@
 						['id' => 149914,"name" => "CALZ. DEL EJERCITO #1396, COL. QUINTA VELARDE, Guadalajara, JA 44430, MX", "supplierName" => "AutoZone" ],
 						['id' => 149919,"name" => "Av. Revolución #705, Col. General Real, Guadalajara, JA 44890, MX", "supplierName" => "WORLDPAC" ]
 					];
+					$partName = translate($partName, 'en', 'es');
 					$searchParams = [
 						'vehicleParams' => [
-							"yearId" => $solicitedYear,
-							"makeId"=> $solicitedMakeId,
-							"modelId"=> $solicitedModelId,
-							"subModelId"=> $submodelId,
+							"yearId" => intval($solicitedYear),
+							"makeId"=> intval($solicitedMakeId),
+							"modelId"=> intval($solicitedModelId),
+							"subModelId"=> intval($solicitedSubmodelId),
 							"engineId"=> $engineId,
 							"engineParams" => $engineParams
 						],
@@ -125,7 +126,8 @@
 					$responseMsg['store'] ='';
 					foreach ($stores as $store) {
 						$storeId = $store['id'];
-						$availableEngines = $partsTech->requestQuote($searchParams, $storeId);
+						$parts = $partsTech->requestQuote($searchParams, $storeId);
+						die(json_encode($parts));
 						if(sizeof($parts) > 0) {
 							$storeData['parts'] = [];
 							$responseMsg['store'] .= "En la tienda de " . $store['supplierName'] ." que esta en ". $store['name']." tienen : \n";
@@ -191,7 +193,7 @@
 					$submodelName = $submodel["submodelName"];
 					if (strtolower($solicitedSubmodel) == strtolower($submodelName)) {
 						$submodelId  = $submodel['submodelId'];
-						$outputContexts[1]['parameters']["submodelId"] = $submodelId;
+						$outputContexts[2]['parameters']["submodelId"] = $submodelId;
 					}
 				}
 				if (empty($submodelId)) {

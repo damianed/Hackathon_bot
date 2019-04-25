@@ -244,31 +244,29 @@
 				$response .= '?';
 			}
 
-			$fulfillment =
-				array (
-					'fulfillmentMessages' => 
-					array (
-					  0 => 
-					  array (
-						'text' => 
-						array (
-						  'text' => 
-						  array (
-							0 => $response
-						  ),
-						),
-					  ),
-					  1 => 
-					  array (
-						'quickReplies' => 
-						array (
-						  'quickReplies' => 
-							$buttons
-						),
-					  ),
-					),
-				"outputContexts" => $outputContexts,
-			);
+			$fulfillment =array (
+							'fulfillmentMessages' => 
+							array (
+							0 => 
+							array (
+								'text' => 
+									array (
+									'text' => 
+										array (
+											0 => $response
+										),
+								),
+							),
+							1 => 
+								array (
+									'quickReplies' => 
+									array (
+									'quickReplies' => $buttons
+									),
+								),
+							),
+						"outputContexts" => $outputContexts,
+					);
 			echo(json_encode($fulfillment));
 			break;
 		case 'SearchPartName':
@@ -350,8 +348,25 @@
 				}
 			}
 			$response .= "?";
-			$fulfillment = array(
-				"fulfillmentText" => $response,
+			$fulfillment = array (
+				'fulfillmentMessages' => array (
+					0 => 
+					array (
+						'text' => 
+							array (
+							'text' => 
+								array (
+									0 => $response
+								),
+						),
+					),
+					1 => 
+						array (
+							'quickReplies' => array (
+									'quickReplies' => $buttons
+							),
+						),
+				),
 				"outputContexts" => $outputContexts,
 			);
 			echo(json_encode($fulfillment));

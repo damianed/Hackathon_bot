@@ -63,7 +63,7 @@
 				$textToTranslate = rtrim($textToTranslate,"|");
 
 				$strNamesSpanish = translate($textToTranslate, 'en-es')['text'];
-				die($strNamesSpanish);
+				die(json_encode($strNamesSpanish));
 				$partNamesSpanish = explode('|', $strNamesSpanish);
 				$count = 1;
 				foreach ($partNamesSpanish as $partName) {

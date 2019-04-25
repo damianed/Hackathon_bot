@@ -282,9 +282,10 @@
 			break;
 		case 'SearchPartName':
 			$outputContext = $outputContexts[1];
-			foreach ($outputContexts as $oc) {
+			foreach ($outputContexts as $key => $oc) {
 				if(strpos($oc['name'], 'contexts/part_search') !== false) {
 					$outputContext = $oc;
+					$ocid = $key;
 					break;
 				}
 			}
@@ -346,6 +347,7 @@
 					$buttons[] = $engine['engineName'];
 				}
 				$response .= '?';
+				$outputContexts[$ocid] = $outputContext;
 				$fulfillment =
 				array (
 					'fulfillmentMessages' =>

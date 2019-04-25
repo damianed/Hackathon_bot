@@ -5,13 +5,17 @@
 	// $text: the text you want to translate
 	// $lang: The translation direction. Example: es-en
 	// Language codes: https://tech.yandex.com/translate/doc/dg/concepts/api-overview-docpage/#api-overview__languages
-	require_once 'vendor/autoload.php';
-	use Stichoza\GoogleTranslate\GoogleTranslate;
+	require_once ('vendor/autoload.php');
+	use \Statickidz\GoogleTranslate;
 	function translate($text, $lang)
 	{
-		$tr = new GoogleTranslate($lang);
-		$tr->setSource(); // Detect language automatically
-		echo $tr->translate($text);
+		$source = 'es';
+		$target = 'en';
+		$text = 'verdadero';
+
+		$trans = new GoogleTranslate();
+		$result = $trans->translate($source, $target, $text);
+		echo $result;
 		// global $apiKey;
 		// $ch = curl_init();
 
@@ -34,4 +38,5 @@
 		// return json_decode($resp, true);
 	}
 
+	translate('', '');
 ?>

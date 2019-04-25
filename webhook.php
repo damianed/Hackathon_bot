@@ -80,7 +80,7 @@
 						$makeId = $make['makeId'];
 					}
 				}
-				if (empty($id)) {
+				if (empty($makeId)) {
 					$solicitedModel  = $ouputContexts[1]['parameters']['model'];
 					$availableModels = $partsTech->getModels($solicitedYear, $makeId, "");
 					foreach ($availableModels as $model) {
@@ -101,7 +101,7 @@
 			}
 
 			$fulfillment = array(
-				"fulfillmentText" => $makeId
+				"fulfillmentText" => $response
 			);
 			echo(json_encode($fulfillment));
 			break;

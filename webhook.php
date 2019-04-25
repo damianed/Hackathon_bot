@@ -63,11 +63,10 @@
 				$textToTranslate = rtrim($textToTranslate,"|");
 
 				$strNamesSpanish = translate($textToTranslate, 'en-es')['text'];
-				die(json_encode($strNamesSpanish));
 				$partNamesSpanish = explode('|', $strNamesSpanish);
-				$count = 1;
-				foreach ($partNamesSpanish as $partName) {
-					 $responseMsg['store'] = str_replace('['.$count.']',$partName, $responseMsg['store']);
+			
+				for ($i=0; $i <sizeof($partNamesSpanish) ; $i++) {
+					$responseMsg['store'] = str_replace('['.($i+1).']',$partName, $responseMsg['store']);
 				}
 
 				$response = $responseMsg['pre'] . $responseMsg['store'];

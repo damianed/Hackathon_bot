@@ -113,7 +113,7 @@
 				if (empty($submodelId)) {
 					$response = 'No encontre una version de tu carro con ese nombre, ¿Seguro que lo escribiste bien? Las versiones de tu carro son: ';
 					foreach ($submodels as $key => $submodel) {
-						if ($key < count($submodels)) {
+						if ($key < (count($submodels)-1)) {
 							$response .= $submodel['submodelName'].', ';
 						}
 						else {
@@ -122,10 +122,10 @@
 					}
 				}
 				else {
-					$availableEngines = $partsTech->getModels($solicitedYear, $makeId, $modelId, $submodelId);
+					$availableEngines = $partsTech->getEngines($solicitedYear, $makeId, $modelId, $submodelId);
 					$response = 'Que motor tiene tu carro: ';
 					foreach ($availableEngines as $key => $engine) {
-						if ($key < count($availableEngines)) {
+						if ($key < (count($availableEngines)-1)) {
 							$response .= $engine['engineName'].', ';
 						}
 						else {
@@ -137,7 +137,7 @@
 			}
 
 			$fulfillment = array(
-				"fulfillmentText" => $availableEngines
+				"fulfillmentText" => $response
 			);
 			echo(json_encode($fulfillment));
 			break;

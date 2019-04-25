@@ -95,9 +95,10 @@
 				foreach ($engines as $engine) {
 					$engineName = join(' ', explode('  ',$engine["engineName"]));
 					$solicitedEngine = join(' ', explode('  ',$solicitedEngine));
-					if ($solicitedEngine == $engineName) {
+					if (strpos($engineName, $solicitedEngine) !== false) {
 						$engineId  = $engine['engineId'];
 						$engineParams = $engine['engineParams'];
+						break;
 					}
 				}
 				if (empty($engineId)) {

@@ -10,7 +10,7 @@
 	$partsTech = new PartsTech();
 	switch ($intentDisplayName) {
 		case 'partImage':
-
+		
 			$moreInfoContext = $outputContexts[0];
 			foreach ($outputContexts as $key => $oc) {
 				if(strpos($oc['name'], 'contexts/moreinfo') !== false) {
@@ -67,7 +67,7 @@
 						}
 
 						if($part['quantity'] > 0) {
-							$partName = translate($partName, 'en', 'es');
+							$partName = translate($partName, 'es', 'en');
 							$partImages[$part['partNumber']] = sizeof($part['images']) > 1 ? $part['images'][0]['preview'] : '';
 							$responseMsg['store'][] =  $quantity.' '.$partName.' con precio de $'. $part['price']['cost']." con el numero de parte ". $part['partNumber']."\n";
 							$foundPart = true;
@@ -173,11 +173,11 @@
 					$responseMsg['pre'] = "Ahorita tenemos disponibles siguientes piezas disponibles en estas tiendas: \n";
 					$foundPart = false;
 					$responseMsg['store'] =[];
-					$imagenes = array();
+					$images = array();
 					foreach ($stores as $store) {
 						$storeId = $store['id'];
 						$parts = $partsTech->requestQuote($searchParams, $storeId)['parts'];
-						$images = array();
+						$imagen = array();
 						if(sizeof($parts) > 0) {
 							$storeData['parts'] = [];
 							$responseMsg['store'][] = "En la tienda de " . $store['supplierName'] ." que esta en ". $store['name']." tienen : \n";

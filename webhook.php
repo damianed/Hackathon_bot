@@ -158,7 +158,7 @@
 					"fulfillmentText" => "No encontre la marca ".$makeName.", ¿Estas seguro que lo escribiste bien?"
 				);
 				echo(json_encode($fulfillment));
-				break;
+				die;
 			}
 
 			$models = $partsTech->getModels($year, $makeId, '');
@@ -174,9 +174,25 @@
 					"fulfillmentText" => "No encontre el modelo ".$modelName.", ¿Estas seguro que lo escribiste bien?"
 				);
 				echo(json_encode($fulfillment));
-				break;
+				die;
 			}
 			$subModels = $partsTech->getSubModels($year, $makeId, $modelId, '');
+			$outputcontexts = $requestJson['queryResult']["outputContexts"];
+
+			$outputcontexts[] =	array(
+									"name" => $requestJson['queryResult']["session"]."contexts/engineSelection",
+									"lifespanCount" => 1,
+									"parameters"=> array()
+								);
+			if(sizeof($subModels) < 2){
+				$response = "¿Cual es el motor que necesita?";
+				$fulfillment = array(
+					"fulfillmentText" => $response,
+					"outputContexts" => $outputcontexts,
+				);
+				echo(json_encode($fulfillment));
+				die;
+			}
 			$response = "¿De cual versión es: ";
 
 			foreach($subModels as $index=>$subModel){

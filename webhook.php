@@ -42,6 +42,9 @@
 							$partName = translate($partName, 'es', 'en');
 							$responseMsg['store'][] =  $quantity.' '.$partName.' con precio de '.  $part['price']['cost']."\n";
 							$foundPart = true;
+							if(sizeof($responseMsg['store']) > 9) {
+								break;
+							}
 						}
 					}
 
@@ -141,6 +144,9 @@
 									$partname = translate($partName, 'es', 'en');
 									$responseMsg['store'][] =  $quantity.' '.$partName.' con precio de '.  $part['price']['cost']."\n";
 									$foundPart = true;
+									if(sizeof($responseMsg['store']) > 9) {
+										break;
+									}
 								}
 							}
 						}

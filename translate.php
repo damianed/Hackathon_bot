@@ -1,4 +1,4 @@
-<?php 
+<?php
 	$apiKey = "trnsl.1.1.20190424T160245Z.9c5adc3a0b583d0e.cdbc585449976b1d6f3bb2770b84d745f3b67620";
 
 
@@ -9,7 +9,7 @@
 	{
 		global $apiKey;
 		$ch = curl_init();
-		
+
 		$url = "https://translate.yandex.net/api/v1.5/tr.json/translate";
 		$params = array(
 			'key' => $apiKey,
@@ -26,7 +26,7 @@
 		// Close request to clear up some resources
 		curl_close($ch);
 
-		return $resp;
+		return json_encode($resp, true);
 	}
 
 ?>

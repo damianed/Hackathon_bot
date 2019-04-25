@@ -189,9 +189,10 @@
 			}
 			else {
 				$outputContext = $outputContexts[1];
-				foreach ($outputContexts as $oc) {
+				foreach ($outputContexts as $key => $oc) {
 					if(strpos($oc['name'], 'contexts/part_search') !== false) {
 						$outputContext = $oc;
+						$ocid = $key;
 						break;
 					}
 				}
@@ -233,7 +234,6 @@
 						else {
 							$response .= 'o '.$submodel['submodelName'];
 						}
-						array_push($buttons, $engine['engineName']);
 					}
 				}
 				else {
@@ -251,9 +251,8 @@
 					}
 				}
 				$response .= '?';
-			}
-
-			$fulfillment =
+				$outputContexts[$ocid] = $outputContext;
+				$fulfillment =
 				array (
 					'fulfillmentMessages' =>
 					array (
@@ -276,6 +275,14 @@
 						),
 					  ),
 					),
+				"outputContexts" => $outputContexts,
+			);
+			echo(json_encode($fulfillment));
+			die();
+			}
+			$outputContexts[$ocid] = $outputContext;
+			$fulfillment = array(
+				"fulfillmentText" => $response,
 				"outputContexts" => $outputContexts,
 			);
 			echo(json_encode($fulfillment));

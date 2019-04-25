@@ -32,7 +32,7 @@
 				),
 			);
 		}else{
-			$$texts[] = ['text' => ['text' => ["No contamos con ninguna imagen para ese numero de parte"]]];
+			$texts[] = ['text' => ['text' => ["No contamos con ninguna imagen para ese numero de parte"]]];
 		}
 		$fulfillment = array(
 			"fulfillmentMessages" => $texts

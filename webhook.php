@@ -188,7 +188,7 @@
 				}
 				foreach ($submodels as $submodel) {
 					$submodelName = $submodel["submodelName"];
-					if ($solicitedSubmodel == $submodelName) {
+					if (strtolower($solicitedSubmodel) == strtolower($submodelName)) {
 						$submodelId  = $submodel['submodelId'];
 						$outputContexts[1]['parameters']["submodelId"] = $submodelId;
 					}

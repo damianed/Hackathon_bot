@@ -230,6 +230,7 @@
 						}
 						else {
 							$response .= 'o '.$engine['engineName'];
+							array_push($buttons, $engine['engineName']);
 						}
 						array_push($buttons, $engine['engineName']);
 					}

@@ -76,12 +76,12 @@
 			}
 			else {
 
-				$partName = $outputContexts[2]['parameters']['partName'];
-				$solicitedYear = $outputContexts[2]['parameters']['year'];
-				$solicitedMakeId  = $outputContexts[2]['parameters']['makeId'];
-				$solicitedModelId  = $outputContexts[2]['parameters']['modelId'];
-				$solicitedSubmodelId = $outputContexts[2]['parameters']['submodelId'];
-				$solicitedEngine = $outputContexts[2]['parameters']['engine'];
+				$partName = $outputContexts[1]['parameters']['partName'];
+				$solicitedYear = $outputContexts[1]['parameters']['year'];
+				$solicitedMakeId  = $outputContexts[1]['parameters']['makeId'];
+				$solicitedModelId  = $outputContexts[1]['parameters']['modelId'];
+				$solicitedSubmodelId = $outputContexts[1]['parameters']['submodelId'];
+				$solicitedEngine = $outputContexts[1]['parameters']['engine'];
 				$engines = $partsTech->getEngines($solicitedYear, $solicitedMakeId, $solicitedModelId, $solicitedSubmodelId);
 				foreach ($engines as $engine) {
 					$engineName = $engine["engineName"];

@@ -101,7 +101,7 @@
 			}
 
 			$fulfillment = array(
-				"fulfillmentText" => $response
+				"fulfillmentText" => $availableMakes
 			);
 			echo(json_encode($fulfillment));
 			break;

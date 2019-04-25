@@ -97,7 +97,7 @@
 					)
 				);
 				$fulfillment = array(
-					"fulfillmentMessages" => $texts
+					"fulfillmentMessages" => $texts,
 					"outputContexts" => $outputContexts
 				);
 			}

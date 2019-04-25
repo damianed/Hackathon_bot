@@ -6,6 +6,7 @@
 
 	$intentDisplayName = $requestJson['queryResult']['intent']['displayName'];
 	$params = $requestJson['queryResult']['parameters'];
+	$ouputContexts = $requestJson['queryResult']['outputContexts'];
 	$partsTech = new PartsTech();
 	switch ($intentDisplayName) {
 		case 'partBrand':
@@ -69,8 +70,8 @@
 				$response = "No me mandaste ninguna version, ¿Cual es la version de tu carro?";
 			}
 			else {
-				$solicitedYear = $params['outputContexts'][1]['parameters']['year'];
-				$solicitedMake  = $params['outputContexts'][0]['parameters']['submodel'];
+				$solicitedYear = $ouputContexts[1]['parameters']['year'];
+				$solicitedMake  = $ouputContexts[0]['parameters']['submodel'];
 				$availableMakes = $partsTech->getMakes($year, "", "");
 				foreach ($availableMakes as $make) {
 					$makeName = $make['makeName'];
@@ -79,7 +80,7 @@
 					}
 				}
 				if (empty($id)) {
-					$solicitedModel = $params['outputContexts'][1]['parameters']['model'];
+					$solicitedModel = $ouputContexts[1]['parameters']['model'];
 					$submodels = $partsTech->getSubModels($solicitedYear, $solicitedMake, $solicitedModel, "");
 					$response = 'No encontre una version de tu carro con ese nombre, ¿Seguro que lo escribiste bien? Las versiones de tu carro son: ';
 					foreach ($submodels as $submodel) {
@@ -92,7 +93,7 @@
 			}
 
 			$fulfillment = array(
-				"fulfillmentText" => $params
+				"fulfillmentText" => $response
 			);
 			echo(json_encode($fulfillment));
 			break;

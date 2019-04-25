@@ -63,7 +63,7 @@
 					$texts[] = ['text' => ['text' => [$text]]];
 				}
 				$fulfillment = array(
-					"fulfillmentMessages" => json_encode($texts)
+					"fulfillmentMessages" => $texts
 				);
 			}
 

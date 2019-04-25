@@ -19,8 +19,6 @@
 				['id' => 149919,"name" => "Av. Revolución #705, Col. General Real, Guadalajara, JA 44890, MX", "supplierName" => "WORLDPAC" ]
 			];
 
-			$partsByStore = [];
-
 			$searchParams = [	"partNumber" => [$params['part_number']]];
 			$response = "Ahorita tenemos disponibles siguientes piezas disponibles en estas tiendas: \n";
 			foreach ($stores as $store) {
@@ -28,7 +26,7 @@
 				$parts = $partsTech->requestQuote($searchParams, $storeId)['parts'];
 				if(sizeof($parts) > 0) {
 					$storeData['parts'] = [];
-					$response .= "En la tienda de " . $store['supplierName'] ." que esta en ". $store['name']."tienen : \n";
+					$response .= "En la tienda de " . $store['supplierName'] ." que esta en ". $store['name']." tienen : \n";
 					foreach ($parts as $part) {
 						$partName = translate($part['partName'], 'en-es');
 						$partName = $part['partName'];
@@ -37,9 +35,7 @@
 							$quantity = $part['availability'][0]['quantity'];
 						}
 						// $storeData['parts'][] = ['partName' => $partName, 'price' => $part['price']['list'], 'quantity' => $part['availability'][0]['quantity']];
-						if($part['quantity'] > 0) {
 							$response .=  $quantity.' '.$partName. ' con precio de '.  $part['price']['cost']."\n";
-						}
 					}
 					break;
 				}

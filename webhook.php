@@ -27,7 +27,7 @@
 				$storeData['parts'] = [];
 				foreach ($parts as $part) {
 					$partName = translate($part['partName'], 'en-es');
-					$storeData['parts'][] = ['partName' => $partName, 'price' => $part['price']['list'], 'quantity' => $part['availability']['quantity']];
+					$storeData['parts'][] = ['partName' => $partName, 'price' => $part['price']['list'], 'quantity' => $part['availability'][0]['quantity']];
 				}
 				$partsByStore[] = $storeData;
 				break;
@@ -45,7 +45,7 @@
 			$fulfillment = array(
 				"fulfillmentText" => $response
 			);
-			die(json_encode($fulfillment));
+			echo json_encode($fulfillment);
 			break;
 		case 'engine':
 			# code ...

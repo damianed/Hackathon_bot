@@ -36,7 +36,7 @@
 					}
 				}
 				// $partsByStore[] = $storeData;
-				break;
+				// break;
 			}
 
 			// foreach ($partsByStore as $storeData) {

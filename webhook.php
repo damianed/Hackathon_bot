@@ -88,6 +88,7 @@
 				$engines = $partsTech->getEngines($solicitedYear, $solicitedMakeId, $solicitedModelId, $solicitedSubmodelId);
 				foreach ($engines as $engine) {
 					$engineName = join(' ', explode('  ',$engine["engineName"]));
+					$solicitedEngine = join(' ', explode('  ',$solicitedEngine));
 					if ($solicitedEngine == $engineName) {
 						$engineId  = $engine['engineId'];
 						$engineParams = $engine['engineParams'];
@@ -239,23 +240,23 @@
 
 			$fulfillment =
 				array (
-					'fulfillmentMessages' => 
+					'fulfillmentMessages' =>
 					array (
-					  0 => 
+					  0 =>
 					  array (
-						'text' => 
+						'text' =>
 						array (
-						  'text' => 
+						  'text' =>
 						  array (
 							0 => $response
 						  ),
 						),
 					  ),
-					  1 => 
+					  1 =>
 					  array (
-						'quickReplies' => 
+						'quickReplies' =>
 						array (
-						  'quickReplies' => 
+						  'quickReplies' =>
 							$buttons
 						),
 					  ),

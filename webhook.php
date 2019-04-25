@@ -123,12 +123,16 @@
 			}
 			$subModels = $partsTech->getSubModels($year, $makeId, $modelId, '');
 			$response = "¿De cual versión es: ";
-			die(json_encode($subModels, JSON_PRETTY_PRINT));
+			
 			foreach($subModels as $index=>$subModel){
-				$response .= $subModels[$index]["submodelName"];
-				//if($index < sizeof($subModels) - 1){
-					$response .= ", ";
-				//}
+				$response .= $subModel["submodelName"];
+				if($index < sizeof($subModels) - 2){
+					$response .= "o ";
+				}else{
+					if($index < sizeof($subModels) - 1){
+						$response .= ", ";
+					}
+				}
 			}
 			$response .= "?";
 			$fulfillment = array(

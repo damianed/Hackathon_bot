@@ -158,6 +158,50 @@ class PartsTech
 		return $resp;
 	}
 }
+$start_time = microtime(true);
+require('translate.php');
+$partsTech = new PartsTech();
+$stores = $partsTech->getStore();
 
+$partsByStore = [];
+
+$searchParams = [	"partNumber" => ["18042"]];
+$foundPart = false;
+foreach ($stores as $store) {
+	$storeId = $store['id'];
+	$parts = $partsTech->requestQuote($searchParams, $storeId)['parts'];
+
+	$storeData = [];
+	$storeData['name'] = $store['name'];
+	$storeData['supplierName'] = $store['supplier']['name'];
+	$storeData['parts'] = [];
+	if($parts) {
+		foreach ($parts as $part) {
+			// $partName = translate($part['partName'], 'en-es');
+			$partName = $part['partName'];
+			$storeData['parts'][] = ['partName' => $partName, 'price' => $part['price']['list'], 'quantity' => $part['availability'][0]['quantity']];
+		}
+		$partsByStore[] = $storeData;
+		$foundPart = true;
+	}
+	if($foundPart) {
+		break;
+	}
+}
+
+$response = "Ahorita tenemos disponibles siguientes piezas disponibles en estas tiendas: \n";
+foreach ($partsByStore as $storeData) {
+	$response .= "En la tienda de " . $storeData['supplierName'] ." que esta en ". $storeData['name'].": \n";
+	foreach ($storeData['parts'] as $part) {
+		if($part['quantity'] > 0) {
+			$response .= 'Hay '.$part['quantity'].' '.$part['partName']. ' con precio de '. $part['price']."\n";
+		}
+	}
+}
+$end_time = microtime(true);
+
+$execution_time = ($end_time - $start_time);
+
+echo " Execution time of script = ".$execution_time." sec";
 
  ?>

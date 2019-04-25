@@ -74,10 +74,27 @@
 				$solicitedModelId  = $outputContexts[1]['parameters']['modelId'];
 				$solicitedSubmodel = $outputContexts[1]['parameters']['submodel'];
 				$submodels = $partsTech->getSubModels($solicitedYear, $solicitedMakeId, $solicitedModelId, "");
+				if (count($submodels) < 2) {
+					$outputContexts[] =	array(
+						"name" => $requestJson["session"]."/contexts/engineSelection",
+						"lifespanCount" => 1,
+						"parameters"=> array(
+							"submodelId" => $subModels[0]['submodelId'],
+						)
+					);
+					$response = "¿Cual es el motor que necesita?";
+					$fulfillment = array(
+						"fulfillmentText" => $response,
+						"outputContexts" => $outputContexts,
+					);
+					echo(json_encode($fulfillment));
+					die;
+				}
 				foreach ($submodels as $submodel) {
 					$submodelName = $submodel["submodelName"];
 					if ($solicitedSubmodel == $submodelName) {
 						$submodelId  = $submodel['submodelId'];
+						$outputContexts[1]['parameters']["submodelId"] = $submodelId;
 					}
 				}
 				if (empty($submodelId)) {
@@ -107,7 +124,8 @@
 			}
 
 			$fulfillment = array(
-				"fulfillmentText" => $response
+				"fulfillmentText" => $response,
+				"outputContexts" => $outputContexts,
 			);
 			echo(json_encode($fulfillment));
 			break;

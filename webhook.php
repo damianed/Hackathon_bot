@@ -64,7 +64,94 @@
 			echo json_encode($fulfillment);
 			break;
 		case 'engine':
-			# code ...
+			if(empty($params['engine'])) {
+				$response = "No me mandaste ningun motor, ¿Cual motor tiene tu auto?";
+			}
+			else {
+
+				$partName = $outputContexts[1]['parameters']['partName'];
+				$solicitedYear = $outputContexts[1]['parameters']['year'];
+				$solicitedMakeId  = $outputContexts[1]['parameters']['makeId'];
+				$solicitedModelId  = $outputContexts[1]['parameters']['modelId'];
+				$solicitedSubmodelId = $outputContexts[1]['parameters']['submodelId'];
+				$solicitedEngine = $outputContexts[1]['parameters']['engine'];
+				$engines = $partsTech->getEngines($solicitedYear, $solicitedMakeId, $solicitedModelId, $solicitedSubmodelId);
+				foreach ($engines as $engine) {
+					$engineName = $engine["engineName"];
+					if ($solicitedEngine == $engineName) {
+						$engineId  = $engine['engineId'];
+						$engineParams = $engine['engineParams'];
+					}
+				}
+				if (empty($engineId)) {
+					$response = 'No encontre un motor con ese nombre, ¿Seguro que lo escribiste bien? Los motores disponibles para tu carro son: ';
+					foreach ($engines as $key => $engine) {
+						if ($key < (count($engines)-1)) {
+							$response .= $engine['engineName'].', ';
+						}
+						else {
+							$response .= 'o '.$engine['engineName'];
+						}
+					}
+				}
+				else {
+					$stores = [
+						['id' => 149918,"name" => "Avenida Felipe Ángeles No. 333-A, Col. Progreso, Guadalajara, JA 44730, MX", "supplierName" => "NAPA Auto Parts" ],
+						['id' => 149914,"name" => "CALZ. DEL EJERCITO #1396, COL. QUINTA VELARDE, Guadalajara, JA 44430, MX", "supplierName" => "AutoZone" ],
+						['id' => 149919,"name" => "Av. Revolución #705, Col. General Real, Guadalajara, JA 44890, MX", "supplierName" => "WORLDPAC" ]
+					];
+					$searchParams = [
+						'vehicleParams' => [
+							"yearId" => $solicitedYear,
+							"makeId"=> $solicitedMakeId,
+							"modelId"=> $solicitedModelId,
+							"subModelId"=> $submodelId,
+							"engineId"=> $engineId,
+							"engineParams" => $engineParams
+						],
+						'keyword' => $partName
+					];
+
+					$responseMsg = [];
+					$responseMsg['pre'] = "Ahorita tenemos disponibles siguientes piezas disponibles en estas tiendas: \n";
+					$foundPart = false;
+					$responseMsg['store'] ='';
+					foreach ($stores as $store) {
+						$storeId = $store['id'];
+						$availableEngines = $partsTech->requestQuote($searchParams, $storeId);
+						if(sizeof($parts) > 0) {
+							$storeData['parts'] = [];
+							$responseMsg['store'] .= "En la tienda de " . $store['supplierName'] ." que esta en ". $store['name']." tienen : \n";
+							foreach ($parts as $part) {
+								$partName = $part['partName'];
+								$quantity = $part['quantity'];
+								if($quantity == 0) {
+									$quantity = $part['availability'][0]['quantity'];
+								}
+
+								if($part['quantity'] > 0) {
+									$responseMsg['store'] .=  $quantity.' '.$partName.' con precio de '.  $part['price']['cost']."\n";
+									die(json_encode(translate($partName, 'es')));
+									$foundPart = true;
+								}
+							}
+						}
+						if($foundPart) {
+							break;
+						}
+						$responseMsg['store'] ='';
+					}
+
+					if($responseMsg['store'] == '') {
+							$response = "Lo siento, pero ese no encontre el producto que estas buscando";
+					} else {
+						$response = $responseMsg['pre'] . $responseMsg['store'];
+					}
+			}
+			$fulfillment = array(
+				"fulfillmentText" => $response
+			);
+			echo json_encode($fulfillment);
  			break;
 		case 'submodel':
 			if(empty($params['submodel'])) {
@@ -178,7 +265,17 @@
 											"submodelId" => $subModels[0]['submodelId'],
 										)
 									);
-				$response = "¿Cual es el motor que necesita?";
+				$availableEngines = $partsTech->getEngines($year, $makeId, $modelId, $subModels[0]['submodelId']);
+				$response = 'Que motor tiene tu carro: ';
+				foreach ($availableEngines as $key => $engine) {
+					if ($key < (count($availableEngines)-1)) {
+						$response .= $engine['engineName'].', ';
+					}
+					else {
+						$response .= 'o '.$engine['engineName'];
+					}
+				}
+				$response .= '?';
 				$fulfillment = array(
 					"fulfillmentText" => $response,
 					"outputContexts" => $outputContexts,

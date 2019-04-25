@@ -95,9 +95,10 @@
 				foreach ($engines as $engine) {
 					$engineName = join(' ', explode('  ',$engine["engineName"]));
 					$solicitedEngine = join(' ', explode('  ',$solicitedEngine));
-					if ($solicitedEngine == $engineName) {
+					if (strpos($engineName, $solicitedEngine) !== false) {
 						$engineId  = $engine['engineId'];
 						$engineParams = $engine['engineParams'];
+						break;
 					}
 				}
 				if (empty($engineId)) {
@@ -188,18 +189,10 @@
 				$response = "No me mandaste ninguna version, ¿Cual es la version de tu carro?";
 			}
 			else {
-				$outputContext = $outputContexts[1];
-				foreach ($outputContexts as $key => $oc) {
-					if(strpos($oc['name'], 'contexts/part_search') !== false) {
-						$outputContext = $oc;
-						$ocid = $key;
-						break;
-					}
-				}
-				$solicitedYear = $outputContext['parameters']['year'];
-				$solicitedMakeId  = $outputContext['parameters']['makeId'];
-				$solicitedModelId  = $outputContext['parameters']['modelId'];
-				$solicitedSubmodel = $outputContext['parameters']['submodel'];
+				$solicitedYear = $outputContexts[2]['parameters']['year'];
+				$solicitedMakeId  = $outputContexts[2]['parameters']['makeId'];
+				$solicitedModelId  = $outputContexts[2]['parameters']['modelId'];
+				$solicitedSubmodel = $outputContexts[2]['parameters']['submodel'];
 				$submodels = $partsTech->getSubModels($solicitedYear, $solicitedMakeId, $solicitedModelId, "");
 				if (count($submodels) < 2) {
 					$outputContexts[] =	array(
@@ -221,12 +214,11 @@
 					$submodelName = $submodel["submodelName"];
 					if (strtolower($solicitedSubmodel) == strtolower($submodelName)) {
 						$submodelId  = $submodel['submodelId'];
-						$outputContext['parameters']["submodelId"] = $submodelId;
+						$outputContexts[2]['parameters']["submodelId"] = $submodelId;
 					}
 				}
 				if (empty($submodelId)) {
 					$response = 'No encontre una version de tu carro con ese nombre, ¿Seguro que lo escribiste bien? Las versiones de tu carro son: ';
-					$buttons = [];
 					foreach ($submodels as $key => $submodel) {
 						if ($key < (count($submodels)-1)) {
 							$response .= $submodel['submodelName'].', ';
@@ -251,8 +243,9 @@
 					}
 				}
 				$response .= '?';
-				$outputContexts[$ocid] = $outputContext;
-				$fulfillment =
+			}
+
+			$fulfillment =
 				array (
 					'fulfillmentMessages' =>
 					array (
@@ -278,25 +271,9 @@
 				"outputContexts" => $outputContexts,
 			);
 			echo(json_encode($fulfillment));
-			die();
-			}
-			$outputContexts[$ocid] = $outputContext;
-			$fulfillment = array(
-				"fulfillmentText" => $response,
-				"outputContexts" => $outputContexts,
-			);
-			echo(json_encode($fulfillment));
 			break;
 		case 'SearchPartName':
-			$outputContext = $outputContexts[1];
-			$ocid = -1;
-			foreach ($outputContexts as $key => $oc) {
-				if(strpos($oc['name'], 'contexts/part_search') !== false) {
-					$outputContext = $oc;
-					$ocid = $key;
-					break;
-				}
-			}
+			$outputContexts = $requestJson['queryResult']["outputContexts"];
 			$year = $params['year'];
 			$makeName = $params['make'];
 			$modelName = $params['model'];
@@ -305,7 +282,7 @@
 			foreach($allMakes as $make){
 				if($make["makeName"] == $makeName){
 					$makeId = $make["makeId"];
-					$outputContext['parameters']["makeId"] = $makeId;
+					$outputContexts[1]['parameters']["makeId"] = $makeId;
 					break;
 				}
 			}
@@ -322,7 +299,7 @@
 			foreach($models as $model){
 				if($model["modelName"] == $modelName){
 					$modelId = $model["modelId"];
-					$outputContext['parameters']['modelId'] = $modelId;
+					$outputContexts[1]['parameters']['modelId'] = $modelId;
 					break;
 				}
 			}
@@ -335,14 +312,14 @@
 			}
 			$subModels = $partsTech->getSubModels($year, $makeId, $modelId, '');
 			if(sizeof($subModels) < 2){
-				$outputContexts[] = array(
+				$outputContexts[1]['parameters']["submodelId"] = array(
 										"name" => $requestJson["session"]."/contexts/engineSelection",
 										"lifespanCount" => 1,
 										"parameters"=> array(
 											"submodelId" => $subModels[0]['submodelId'],
 										)
 									);
-				$outputContext['parameters']["submodelId"] = $subModels[0]['submodelId'];
+				$outputContexts[1]['parameters']["submodelId"] =	$subModels[0]['submodelId'];
 				$availableEngines = $partsTech->getEngines($year, $makeId, $modelId, $subModels[0]['submodelId']);
 				$response = 'Que motor tiene tu carro: ';
 				foreach ($availableEngines as $key => $engine) {
@@ -355,7 +332,6 @@
 					$buttons[] = $engine['engineName'];
 				}
 				$response .= '?';
-				$outputContexts[$ocid] = $outputContext;
 				$fulfillment =
 				array (
 					'fulfillmentMessages' =>

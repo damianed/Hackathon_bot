@@ -26,8 +26,8 @@
 				$texts[] = array (
 					'card' =>
 					array (
-						'title' => 'card title',
-						'subtitle' => 'card text',
+						'title' => '',
+						'subtitle' => '',
 						'imageUri' => $images[$partNum],
 					),
 				);

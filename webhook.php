@@ -20,7 +20,8 @@
 			];
 
 			$searchParams = [	"partNumber" => [$params['part_number']]];
-			$response['pre'] = "Ahorita tenemos disponibles siguientes piezas disponibles en estas tiendas: \n";
+			$responseMsg = [];
+			$responseMsg['pre'] = "Ahorita tenemos disponibles siguientes piezas disponibles en estas tiendas: \n";
 			$foundPart = false;
 			$responseMsg['store'] ='';
 			foreach ($stores as $store) {
@@ -47,7 +48,7 @@
 				if($foundPart) {
 					break;
 				}
-				$response['store'] ='';
+				$responseMsg['store'] ='';
 			}
 			if($response['store'] == '') {
 				$response = "Lo siento, pero parece que esa pieza no esta disponible o no exite";

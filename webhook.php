@@ -114,7 +114,7 @@
 			}
 
 			$fulfillment = array(
-				"fulfillmentText" => $submodels
+				"fulfillmentText" => $response
 			);
 			echo(json_encode($fulfillment));
 			break;

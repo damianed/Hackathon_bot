@@ -58,7 +58,7 @@
 			}
 
 			$fulfillment = array(
-				"fulfillmentText" => $ouputContexts
+				"fulfillmentText" => $response
 			);
 			echo json_encode($fulfillment);
 			break;
@@ -93,7 +93,7 @@
 			}
 
 			$fulfillment = array(
-				"fulfillmentText" => $response
+				"fulfillmentText" => $ouputContexts
 			);
 			echo(json_encode($fulfillment));
 			break;

@@ -26,7 +26,7 @@
 		// Close request to clear up some resources
 		curl_close($ch);
 
-		return json_encode($resp, true);
+		return json_decode($resp, true);
 	}
 
 ?>

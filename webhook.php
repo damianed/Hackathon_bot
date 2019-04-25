@@ -62,6 +62,7 @@
 				$solicitedYear = $params['outputContexts'][1]['parameters']['year'];
 				$solicitedMake  = $params['outputContexts'][0]['parameters']['submodel'];
 				$availableMakes = $partsTech.getMakes($year, "", "");
+				die(json_encode($availableMakes, JSON_PRETTY_PRINT));
 				foreach ($availableMakes as $make) {
 					$makeName = $make['makeName'];
 					if ($makeName == $solicitedMake) {

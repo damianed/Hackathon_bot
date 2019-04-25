@@ -120,7 +120,7 @@
 			}
 			if($modelId == 0){
 				$fulfillment = array(
-					"fulfillmentText" => "No encontre la marca ".$modelName.", ¿Estas seguro que lo escribiste bien?"
+					"fulfillmentText" => "No encontre el modelo ".$modelName.", ¿Estas seguro que lo escribiste bien?"
 				);
 				echo(json_encode($fulfillment));
 				break;

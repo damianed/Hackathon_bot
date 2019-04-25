@@ -127,7 +127,7 @@
 			
 			foreach($subModels as $index=>$subModel){
 				$response .= $subModel["submodelName"];
-				if($index < sizeof($subModels) - 2){
+				if($index == sizeof($subModels) - 2){
 					$response .= "o ";
 				}else{
 					if($index < sizeof($subModels) - 1){

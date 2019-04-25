@@ -41,7 +41,7 @@
 
 						if($part['quantity'] > 0) {
 							$partsNameEnglish[] = $partName;
-							$responseMsg['store'] .=  $quantity.' ['.(sizeof($partsNameEnglish)-1).'] con precio de '.  $part['price']['cost']."\n";
+							$responseMsg['store'] .=  $quantity.' ['.sizeof($partsNameEnglish).'] con precio de '.  $part['price']['cost']."\n";
 							$foundPart = true;
 						}
 					}
@@ -63,10 +63,11 @@
 				$textToTranslate = rtrim($textToTranslate,"|");
 
 				$strNamesSpanish = translate($textToTranslate, 'en-es')['text'];
-
+				die($strNamesSpanish);
 				$partNamesSpanish = explode('|', $strNamesSpanish);
-				foreach ($partNamesSpanish as $index => $partName) {
-					 $responseMsg['store'] = str_replace('['.$index.']',$partName, $responseMsg['store']);
+				$count = 1;
+				foreach ($partNamesSpanish as $partName) {
+					 $responseMsg['store'] = str_replace('['.$count.']',$partName, $responseMsg['store']);
 				}
 
 				$response = $responseMsg['pre'] . $responseMsg['store'];
@@ -115,7 +116,7 @@
 					foreach ($submodels as $key => $submodel) {
 						if ($key < count($submodels)) {
 							$response .= $submodel['submodelName'].', ';
-						} 
+						}
 						else {
 							$response .= 'o '.$submodel['submodelName'];
 						}
@@ -127,7 +128,7 @@
 						$response = 'Que motor tiene tu carro: ';
 						if ($key < count($availableEngines)) {
 							$response .= $engine['engineName'].', ';
-						} 
+						}
 						else {
 							$response .= 'o '.$engine['engineName'];
 						}

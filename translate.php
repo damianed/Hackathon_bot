@@ -7,12 +7,8 @@
 	// Language codes: https://tech.yandex.com/translate/doc/dg/concepts/api-overview-docpage/#api-overview__languages
 	require_once ('vendor/autoload.php');
 	use \Statickidz\GoogleTranslate;
-	function translate($text, $lang)
+	function translate($text, $target, $source)
 	{
-		$source = 'es';
-		$target = 'en';
-		$text = 'verdadero';
-
 		$trans = new GoogleTranslate();
 		$result = $trans->translate($source, $target, $text);
 		echo $result;
@@ -37,6 +33,4 @@
 
 		// return json_decode($resp, true);
 	}
-
-	translate('', '');
 ?>

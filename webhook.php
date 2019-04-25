@@ -80,7 +80,7 @@
 				}
 				if (empty($id)) {
 					$solicitedModel = $params['outputContexts'][1]['parameters']['model'];
-					$submodels = $partsTech->getSubModels($year, $solicitedMake, $solicitedModel, "");
+					$submodels = $partsTech->getSubModels($solicitedYear, $solicitedMake, $solicitedModel, "");
 					$response = 'No encontre una version de tu carro con ese nombre, ¿Seguro que lo escribiste bien? Las versiones de tu carro son: ';
 					foreach ($submodels as $submodel) {
 							$response .= $submodel['submodelName'].', ';
@@ -92,7 +92,7 @@
 			}
 
 			$fulfillment = array(
-				"fulfillmentText" => $submodels
+				"fulfillmentText" => $response
 			);
 			echo(json_encode($fulfillment));
 			break;

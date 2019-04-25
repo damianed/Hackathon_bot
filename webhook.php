@@ -71,8 +71,9 @@
 			}
 			else {
 				$solicitedYear = $ouputContexts[1]['parameters']['year'];
-				$solicitedMake  = $ouputContexts[0]['parameters']['submodel'];
-				$availableMakes = $partsTech->getMakes($year, "", "");
+				$solicitedModel  = $ouputContexts[1]['parameters']['model'];
+				$solicitedMake  = $ouputContexts[1]['parameters']['make'];
+				$availableMakes = $partsTech->getMakes($solicitedYear, $solicitedModel, "");
 				foreach ($availableMakes as $make) {
 					$makeName = $make['makeName'];
 					if ($makeName == $solicitedMake) {
@@ -80,7 +81,6 @@
 					}
 				}
 				if (empty($id)) {
-					$solicitedModel = $ouputContexts[1]['parameters']['model'];
 					$submodels = $partsTech->getSubModels($solicitedYear, $solicitedMake, $solicitedModel, "");
 					$response = 'No encontre una version de tu carro con ese nombre, ¿Seguro que lo escribiste bien? Las versiones de tu carro son: ';
 					foreach ($submodels as $submodel) {
@@ -93,7 +93,7 @@
 			}
 
 			$fulfillment = array(
-				"fulfillmentText" => $solicitedYear
+				"fulfillmentText" => $response
 			);
 			echo(json_encode($fulfillment));
 			break;

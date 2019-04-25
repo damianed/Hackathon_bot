@@ -27,7 +27,7 @@
 				$parts = $partsTech->requestQuote($searchParams, $storeId)['parts'];
 				if(sizeof($parts) > 0) {
 					$storeData['parts'] = [];
-					$response = "En la tienda de " . $store['supplierName'] ." que esta en ". $store['name']." tienen : \n";
+					$response .= "En la tienda de " . $store['supplierName'] ." que esta en ". $store['name']." tienen : \n";
 					foreach ($parts as $part) {
 						// $partName = translate($part['partName'], 'en-es');
 						$partName = $part['partName'];

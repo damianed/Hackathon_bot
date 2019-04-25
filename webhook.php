@@ -146,15 +146,19 @@
 					$responseMsg['pre'] = "Ahorita tenemos disponibles siguientes piezas disponibles en estas tiendas: \n";
 					$foundPart = false;
 					$responseMsg['store'] =[];
+					$imagenes = array();
 					foreach ($stores as $store) {
 						$storeId = $store['id'];
 						$parts = $partsTech->requestQuote($searchParams, $storeId)['parts'];
+						$imagenes = array();
 						if(sizeof($parts) > 0) {
 							$storeData['parts'] = [];
 							$responseMsg['store'][] = "En la tienda de " . $store['supplierName'] ." que esta en ". $store['name']." tienen : \n";
 							foreach ($parts as $part) {
 								$partName = $part['partName'];
 								$quantity = $part['quantity'];
+								$partNum = $part['partNumber'];
+								$imagenes[$partNum] = sizeof($part['images']) > 0 ? $part['images'][0]['preview'] : '';
 								if($quantity == 0) {
 									$quantity = $part['availability'][0]['quantity'];
 								}
@@ -182,7 +186,13 @@
 						foreach ($responseMsg['store'] as $text) {
 							$texts[] = ['text' => ['text' => [$text]]];
 						}
-
+						$outputContexts[] =	array(
+							"name" => $requestJson["session"]."/contexts/moreInfo",
+							"lifespanCount" => 5,
+							"parameters"=> array(
+								"images" => $images,
+							)
+						);
 						$fulfillment = array(
 							"fulfillmentMessages" => $texts
 						);

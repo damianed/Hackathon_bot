@@ -86,24 +86,10 @@
 			}
 			else {
 				$solicitedYear = $ouputContexts[1]['parameters']['year'];
-				$solicitedMake  = $ouputContexts[1]['parameters']['make'];
-				$availableMakes = $partsTech->getMakes($solicitedYear, "", "");
-				foreach ($availableMakes as $make) {
-					$makeName = $make['makeName'];
-					if ($makeName == $solicitedMake) {
-						$makeId = $make['makeId'];
-					}
-				}
-				$solicitedModel  = $ouputContexts[1]['parameters']['model'];
-				$availableModels = $partsTech->getModels($solicitedYear, $makeId, "");
-				foreach ($availableModels as $model) {
-					$modelName = $model['modelName'];
-					if ($modelName == $solicitedModel) {
-						$modelId = $model['modelId'];
-					}
-				}
+				$solicitedMakeId  = $ouputContexts[1]['parameters']['makeId'];
+				$solicitedModelId  = $ouputContexts[1]['parameters']['modelId'];
 				$solicitedSubmodel = $ouputContexts[1]['parameters']['submodel'];
-				$submodels = $partsTech->getSubModels($solicitedYear, $makeId, $modelId, "");
+				$submodels = $partsTech->getSubModels($solicitedYear, $solicitedMakeId, $solicitedModelId, "");
 				foreach ($submodels as $submodel) {
 					$submodelName = $submodel["submodelName"];
 					if ($solicitedSubmodel == $submodelName) {

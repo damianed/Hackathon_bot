@@ -54,6 +54,7 @@
 			# code ...
 			break;
 		case 'submodel':
+			$response = "Hello";
 			if(empty($params['submodel'])) {
 				$response = "No me mandaste ningun modelo, ¿Cual es el model de tu carro?";
 			}
@@ -122,6 +123,7 @@
 			}
 			$subModels = $partsTech->getSubModels($year, $make, $modelId, '');
 			$response = "¿De cual versión es: ";
+			file_put_contents("./log", json_encode($subModels, JSON_PRETTY_PRINT));
 			foreach($subModels as $index=>$subModel){
 				$response .= $subModels[$index]["submodelName"];
 				//if($index < sizeof($subModels) - 1){

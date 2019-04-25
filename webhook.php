@@ -121,11 +121,11 @@
 			$subModels = $partsTech->getSubModels($year, $make, $modelId, '');
 			$response = "¿De cual versión es: ";
 			foreach($subModels as $index=>$subModel){
-				$response .= "$subModel";
+				$response .= $subModel["submodelName"];
 				if($index < sizeof($subModels) - 2){
 					$response .= ", ";
 				}else if($index < sizeof($subModels)){
-					$respose .= "o ";
+					$response .= "o ";
 				}
 			}
 			$response .= "?";

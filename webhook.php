@@ -289,6 +289,7 @@
 			break;
 		case 'SearchPartName':
 			$outputContext = $outputContexts[1];
+			$ocid = -1;
 			foreach ($outputContexts as $key => $oc) {
 				if(strpos($oc['name'], 'contexts/part_search') !== false) {
 					$outputContext = $oc;
@@ -334,14 +335,14 @@
 			}
 			$subModels = $partsTech->getSubModels($year, $makeId, $modelId, '');
 			if(sizeof($subModels) < 2){
-				$outputContext['parameters']["submodelId"] = array(
+				$outputContexts[] = array(
 										"name" => $requestJson["session"]."/contexts/engineSelection",
 										"lifespanCount" => 1,
 										"parameters"=> array(
 											"submodelId" => $subModels[0]['submodelId'],
 										)
 									);
-				$outputContext['parameters']["submodelId"] =	$subModels[0]['submodelId'];
+				$outputContext['parameters']["submodelId"] = $subModels[0]['submodelId'];
 				$availableEngines = $partsTech->getEngines($year, $makeId, $modelId, $subModels[0]['submodelId']);
 				$response = 'Que motor tiene tu carro: ';
 				foreach ($availableEngines as $key => $engine) {

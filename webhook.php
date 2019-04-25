@@ -107,6 +107,7 @@
 						['id' => 149914,"name" => "CALZ. DEL EJERCITO #1396, COL. QUINTA VELARDE, Guadalajara, JA 44430, MX", "supplierName" => "AutoZone" ],
 						['id' => 149919,"name" => "Av. Revolución #705, Col. General Real, Guadalajara, JA 44890, MX", "supplierName" => "WORLDPAC" ]
 					];
+					$partName = translate($partName, 'en', 'es');
 					$searchParams = [
 						'vehicleParams' => [
 							"yearId" => $solicitedYear,

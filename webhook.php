@@ -132,7 +132,7 @@
 						}
 					}
 				}
-				$response .= '?'
+				$response .= '?';
 			}
 
 			$fulfillment = array(

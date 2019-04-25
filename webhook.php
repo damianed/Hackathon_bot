@@ -143,10 +143,11 @@
 					}
 
 					if($responseMsg['store'] == '') {
-							$response = "Lo siento, pero ese no encontre el producto que estas buscando";
+						$response = "Lo siento, pero ese no encontre el producto que estas buscando";
 					} else {
 						$response = $responseMsg['pre'] . $responseMsg['store'];
 					}
+				}
 			}
 			$fulfillment = array(
 				"fulfillmentText" => $response

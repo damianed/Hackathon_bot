@@ -60,9 +60,12 @@
 				foreach ($partsNameEnglish as $partName) {
 					$textToTranslate .= $partName . '|';
 				}
-				$textToTranslate = rtrim($textToTranslate,"|");
+				$textToTranslate = rtrim($textToTranslate," | ");
 
-				$strNamesSpanish = translate($textToTranslate, 'en-es')['text'][0];
+				$res = translate($textToTranslate, 'en-es');
+				die(json_decode($res));
+				$strNamesSpanish = $res['text'][0];
+
 				$partNamesSpanish = explode('|', $strNamesSpanish);
 
 				for ($i=0; $i <sizeof($partNamesSpanish) ; $i++) {

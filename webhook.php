@@ -110,11 +110,11 @@
 					$partName = translate($partName, 'en', 'es');
 					$searchParams = [
 						'vehicleParams' => [
-							"yearId" => $solicitedYear,
-							"makeId"=> $solicitedMakeId,
-							"modelId"=> $solicitedModelId,
-							"subModelId"=> $solicitedSubmodelId,
-							"engineId"=> $engineId,
+							"yearId" => intval($solicitedYear),
+							"makeId"=> intval($solicitedMakeId),
+							"modelId"=> intval($solicitedModelId),
+							"subModelId"=> intval($solicitedSubmodelId),
+							"engineId"=> intval($engineId),
 							"engineParams" => $engineParams
 						],
 						'keyword' => $partName

@@ -81,7 +81,7 @@
 				$solicitedMakeId  = $outputContexts[1]['parameters']['makeId'];
 				$solicitedModelId  = $outputContexts[1]['parameters']['modelId'];
 				$solicitedSubmodelId = $outputContexts[1]['parameters']['submodelId'];
-				$solicitedEngine = $outputContexts[1]['parameters']['engine'];
+				$solicitedEngine = $params['engine'];
 				$engines = $partsTech->getEngines($solicitedYear, $solicitedMakeId, $solicitedModelId, $solicitedSubmodelId);
 				foreach ($engines as $engine) {
 					$engineName = $engine["engineName"];

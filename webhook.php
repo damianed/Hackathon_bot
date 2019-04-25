@@ -39,8 +39,8 @@
 						}
 
 						if($part['quantity'] > 0) {
+							$partName = translate($partName, 'es', 'en');
 							$responseMsg['store'] .=  $quantity.' '.$partName.' con precio de '.  $part['price']['cost']."\n";
-							die(json_encode(translate($partName, 'es')));
 							$foundPart = true;
 						}
 					}
@@ -130,8 +130,8 @@
 								}
 
 								if($part['quantity'] > 0) {
+									$partname = $translate($partName, 'es', 'en');
 									$responseMsg['store'] .=  $quantity.' '.$partName.' con precio de '.  $part['price']['cost']."\n";
-									die(json_encode(translate($partName, 'es')));
 									$foundPart = true;
 								}
 							}

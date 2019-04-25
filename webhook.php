@@ -65,7 +65,7 @@
 				foreach ($responseMsg['store'] as $text) {
 					$texts[] = ['text' => ['text' => [$text]]];
 				}
-				$text[] = array (
+				$texts[] = array (
 					'card' =>
 					array (
 						'title' => 'card title',
@@ -180,7 +180,7 @@
 							$texts[] = ['text' => ['text' => [$text]]];
 						}
 
-						$text[] = array (
+						$texts[] = array (
 							'card' =>
 							array (
 								'title' => 'card title',

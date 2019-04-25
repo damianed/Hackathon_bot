@@ -74,7 +74,7 @@
 				$solicitedModelId  = $outputContexts[1]['parameters']['modelId'];
 				$solicitedSubmodel = $outputContexts[1]['parameters']['submodel'];
 				$sentSubmodelId = $outputContexts[1]['parameters']['submodelId'];
-				if (empty(sentSubmodelId)) {
+				if (empty($sentSubmodelId)) {
 					$submodels = $partsTech->getSubModels($solicitedYear, $solicitedMakeId, $solicitedModelId, "");
 					foreach ($submodels as $submodel) {
 						$submodelName = $submodel["submodelName"];

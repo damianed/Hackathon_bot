@@ -73,7 +73,7 @@
 					$submodels = $partsTech.getSubModels($year, $solicitedMake, $solicitedModel, "");
 					$response = 'No encontre la version de tu carro con ese nombre, ¿Seguro que lo escribiste bien? Las versiones de tu carro son: ';
 					foreach ($submodels as $key => $submodel) {
-							$response += $submodel['submodelName'].', ';
+							$response .= $submodel['submodelName'].', ';
 					}
 				}
 				else {
@@ -121,7 +121,7 @@
 				echo(json_encode($fulfillment));
 				break;
 			}
-			$subModels = $partsTech->getSubModels($year, $make, $modelId, '');
+			$subModels = $partsTech->getSubModels($year, $makeid, $modelId, '');
 			$response = "¿De cual versión es: ";
 			die(json_encode($subModels, JSON_PRETTY_PRINT));
 			foreach($subModels as $index=>$subModel){

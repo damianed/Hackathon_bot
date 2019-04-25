@@ -16,8 +16,8 @@
 			$stores = [
 				['id' => "149918","name" => "Avenida Felipe Ángeles No. 333-A, Col. Progreso, Guadalajara, JA 44730, MX", "supplierName" => "NAPA Auto Parts" ],
 				['id' => "149914","name" => "CALZ. DEL EJERCITO #1396, COL. QUINTA VELARDE, Guadalajara, JA 44430, MX", "supplierName" => "AutoZone" ],
-				['id' => "149919","name" => "Av. Revolución #705, Col. General Real, Guadalajara, JA 44890, MX", "supplierName" => "WORLDPAC" ],
-				"149914", "149919"];
+				['id' => "149919","name" => "Av. Revolución #705, Col. General Real, Guadalajara, JA 44890, MX", "supplierName" => "WORLDPAC" ]
+			];
 
 			$partsByStore = [];
 
@@ -25,7 +25,8 @@
 			$response = "Ahorita tenemos disponibles siguientes piezas disponibles en estas tiendas: \n";
 			foreach ($stores as $store) {
 				$storeId = $store['id'];
-				$parts = $partsTech->requestQuote($searchParams, $storeId)['parts'];
+				$result = $partsTech->requestQuote($searchParams, $storeId);
+				die(json_encode($result));
 				if(sizeof($parts) > 0) {
 					$storeData['parts'] = [];
 					$response .= "En la tienda de " . $store['supplierName'] ." que esta en ". $store['name']."tienen : \n";

@@ -31,7 +31,6 @@
 					$storeData['parts'] = [];
 					$responseMsg['store'] .= "En la tienda de " . $store['supplierName'] ." que esta en ". $store['name']." tienen : \n";
 					foreach ($parts as $part) {
-						// $partName = translate($part['partName'], 'en-es');
 						$partName = $part['partName'];
 						$quantity = $part['quantity'];
 						if($quantity == 0) {
@@ -39,6 +38,7 @@
 						}
 						// $storeData['parts'][] = ['partName' => $partName, 'price' => $part['price']['list'], 'quantity' => $part['availability'][0]['quantity']];
 						if($part['quantity'] > 0) {
+							$partName = translate($part['partName'], 'en-es');
 							$responseMsg['store'] .=  $quantity.' '.$partName. ' con precio de '.  $part['price']['cost']."\n";
 							$foundPart = true;
 						}

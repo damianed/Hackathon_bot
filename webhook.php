@@ -238,7 +238,7 @@
 				$response .= '?';
 			}
 
-			$fulfillment = array(
+			$fulfillment =
 				array (
 					'fulfillmentMessages' => 
 					array (
@@ -261,7 +261,6 @@
 						),
 					  ),
 					),
-				),
 				"outputContexts" => $outputContexts,
 			);
 			echo(json_encode($fulfillment));

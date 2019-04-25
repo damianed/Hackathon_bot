@@ -20,14 +20,16 @@
 			];
 
 			$searchParams = [	"partNumber" => [$params['part_number']]];
-			$response = "Ahorita tenemos disponibles siguientes piezas disponibles en estas tiendas: \n";
+			$responseMsg = [];
+			$responseMsg['pre'] = "Ahorita tenemos disponibles siguientes piezas disponibles en estas tiendas: \n";
 			$foundPart = false;
+			$responseMsg['store'] ='';
 			foreach ($stores as $store) {
 				$storeId = $store['id'];
 				$parts = $partsTech->requestQuote($searchParams, $storeId)['parts'];
 				if(sizeof($parts) > 0) {
 					$storeData['parts'] = [];
-					$response .= "En la tienda de " . $store['supplierName'] ." que esta en ". $store['name']." tienen : \n";
+					$responseMsg['store'] .= "En la tienda de " . $store['supplierName'] ." que esta en ". $store['name']." tienen : \n";
 					foreach ($parts as $part) {
 						// $partName = translate($part['partName'], 'en-es');
 						$partName = $part['partName'];
@@ -37,7 +39,7 @@
 						}
 						// $storeData['parts'][] = ['partName' => $partName, 'price' => $part['price']['list'], 'quantity' => $part['availability'][0]['quantity']];
 						if($part['quantity'] > 0) {
-							$response .=  $quantity.' '.$partName. ' con precio de '.  $part['price']['cost']."\n";
+							$responseMsg['store'] .=  $quantity.' '.$partName. ' con precio de '.  $part['price']['cost']."\n";
 							$foundPart = true;
 						}
 					}
@@ -46,6 +48,12 @@
 				if($foundPart) {
 					break;
 				}
+				$responseMsg['store'] ='';
+			}
+			if($responseMsg['store'] == '') {
+				$response = "Lo siento, pero parece que esa pieza no esta disponible o no exite";
+			} else {
+				$response = $responseMsg['pre'] . $responseMsg['store'];
 			}
 
 			$fulfillment = array(
@@ -64,7 +72,7 @@
 			else {
 				$solicitedYear = $params['outputContexts'][1]['parameters']['year'];
 				$solicitedMake  = $params['outputContexts'][0]['parameters']['submodel'];
-				$availableMakes = $partsTech.getMakes($year, "", "");
+				$availableMakes = $partsTech->getMakes($year, "", "");
 				die(json_encode($availableMakes, JSON_PRETTY_PRINT));
 				foreach ($availableMakes as $make) {
 					$makeName = $make['makeName'];
@@ -74,7 +82,7 @@
 				}
 				if (empty($id)) {
 					$solicitedModel = $params['outputContexts'][1]['parameters']['model'];
-					$submodels = $partsTech.getSubModels($year, $solicitedMake, $solicitedModel, "");
+					$submodels = $partsTech->getSubModels($year, $solicitedMake, $solicitedModel, "");
 					$response = 'No encontre la version de tu carro con ese nombre, ¿Seguro que lo escribiste bien? Las versiones de tu carro son: ';
 					foreach ($submodels as $key => $submodel) {
 							$response .= $submodel['submodelName'].', ';

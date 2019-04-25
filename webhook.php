@@ -120,7 +120,7 @@
 			}
 			$subModels = $partsTech->getSubModels($year, $make, $modelId, '');
 			$response = "¿De cual versión es: ";
-			foreach($subModels as $index=>$submodel){
+			foreach($subModels as $index=>$subModel){
 				$response .= "$subModel";
 				if($index < sizeof($subModels) - 2){
 					$response .= ", ";

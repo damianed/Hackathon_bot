@@ -41,7 +41,7 @@
 
 						if($part['quantity'] > 0) {
 							$partsNameEnglish[] = $partName;
-							$responseMsg['store'] .=  $quantity.' ['.(sizeof($partsNameEnglish)-1).'] con precio de '.  $part['price']['cost']."\n";
+							$responseMsg['store'] .=  $quantity.' ['.sizeof($partsNameEnglish).'] con precio de '.  $part['price']['cost']."\n";
 							$foundPart = true;
 						}
 					}
@@ -65,8 +65,10 @@
 				$strNamesSpanish = translate($textToTranslate, 'en-es')['text'];
 
 				$partNamesSpanish = explode('|', $strNamesSpanish);
-				foreach ($partNamesSpanish as $index => $partName) {
-					 $responseMsg['store'] = str_replace('['.$index.']',$partName, $responseMsg['store']);
+
+				$count = 1;
+				foreach ($partNamesSpanish as $partName) {
+					 $responseMsg['store'] = str_replace('['.$count.']',$partName, $responseMsg['store']);
 				}
 
 				$response = $responseMsg['pre'] . $responseMsg['store'];

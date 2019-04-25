@@ -9,8 +9,18 @@
 	$outputContexts = $requestJson['queryResult']['outputContexts'];
 	$partsTech = new PartsTech();
 	switch ($intentDisplayName) {
-		case 'partBrand':
-
+		case 'partImage':
+		// $texts[] = array (
+		// 	'card' =>
+		// 	array (
+		// 		'title' => 'card title',
+		// 		'subtitle' => 'card text',
+		// 		'imageUri' => 'https://punchout.beta.partstech.com/image?url=http%3A//econtent.autozone.com%3A24999/znetcs/additional-prod-images/en/us/sie/228242005002z/06/image/4/',
+		// 	),
+		// );
+		// $fulfillment = array(
+		// 	"fulfillmentMessages" => $texts
+		// );
 
 			break;
 		case 'search_part_number':
@@ -65,14 +75,7 @@
 				foreach ($responseMsg['store'] as $text) {
 					$texts[] = ['text' => ['text' => [$text]]];
 				}
-				$texts[] = array (
-					'card' =>
-					array (
-						'title' => 'card title',
-						'subtitle' => 'card text',
-						'imageUri' => 'https://punchout.beta.partstech.com/image?url=http%3A//econtent.autozone.com%3A24999/znetcs/additional-prod-images/en/us/sie/228242005002z/06/image/4/',
-					),
-				);
+				
 				$fulfillment = array(
 					"fulfillmentMessages" => $texts
 				);
@@ -180,14 +183,6 @@
 							$texts[] = ['text' => ['text' => [$text]]];
 						}
 
-						$texts[] = array (
-							'card' =>
-							array (
-								'title' => 'card title',
-								'subtitle' => 'card text',
-								'imageUri' => 'https://punchout.beta.partstech.com/image?url=http%3A//econtent.autozone.com%3A24999/znetcs/additional-prod-images/en/us/sie/228242005002z/06/image/4/',
-							),
-						);
 						$fulfillment = array(
 							"fulfillmentMessages" => $texts
 						);

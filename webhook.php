@@ -26,7 +26,6 @@
 			foreach ($stores as $store) {
 				$storeId = $store['id'];
 				$result = $partsTech->requestQuote($searchParams, $storeId);
-				die(json_encode($result));
 				if(sizeof($parts) > 0) {
 					$storeData['parts'] = [];
 					$response .= "En la tienda de " . $store['supplierName'] ." que esta en ". $store['name']."tienen : \n";

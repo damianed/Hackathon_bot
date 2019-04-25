@@ -52,7 +52,7 @@
 				$responseMsg['store'] =[];
 			}
 
-			if($responseMsg['store'] == '') {
+			if(sizeof($responseMsg['store']) == 0) {
 					$response = "Lo siento, pero el producto con ese numero de parte no esta disponible por el momento";
 					$fulfillment = array(
 						"fulfillmentText" => $response
@@ -123,13 +123,13 @@
 					$responseMsg = [];
 					$responseMsg['pre'] = "Ahorita tenemos disponibles siguientes piezas disponibles en estas tiendas: \n";
 					$foundPart = false;
-					$responseMsg['store'] ='';
+					$responseMsg['store'] =[];
 					foreach ($stores as $store) {
 						$storeId = $store['id'];
 						$parts = $partsTech->requestQuote($searchParams, $storeId)['parts'];
 						if(sizeof($parts) > 0) {
 							$storeData['parts'] = [];
-							$responseMsg['store'] .= "En la tienda de " . $store['supplierName'] ." que esta en ". $store['name']." tienen : \n";
+							$responseMsg['store'][] = "En la tienda de " . $store['supplierName'] ." que esta en ". $store['name']." tienen : \n";
 							foreach ($parts as $part) {
 								$partName = $part['partName'];
 								$quantity = $part['quantity'];
@@ -139,7 +139,7 @@
 
 								if($part['quantity'] > 0) {
 									$partname = translate($partName, 'es', 'en');
-									$responseMsg['store'] .=  $quantity.' '.$partName.' con precio de '.  $part['price']['cost']."\n";
+									$responseMsg['store'][] =  $quantity.' '.$partName.' con precio de '.  $part['price']['cost']."\n";
 									$foundPart = true;
 								}
 							}
@@ -147,13 +147,21 @@
 						if($foundPart) {
 							break;
 						}
-						$responseMsg['store'] ='';
+						$responseMsg['store'] =[];
 					}
 
-					if($responseMsg['store'] == '') {
-						$response = "Lo siento, pero ese no encontre el producto que estas buscando";
+					if(sizeof($responseMsg['store']) == 0) {
+							$response = "Lo siento, pero el producto con ese numero de parte no esta disponible por el momento";
 					} else {
-						$response = $responseMsg['pre'] . $responseMsg['store'];
+						$texts = [];
+						foreach ($responseMsg['store'] as $text) {
+							$texts[] = ['text' => ['text' => [$text]]];
+						}
+						$fulfillment = array(
+							"fulfillmentMessages" => $texts
+						);
+						echo json_encode($fulfillment);
+						die();
 					}
 				}
 			}

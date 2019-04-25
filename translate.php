@@ -11,7 +11,7 @@
 	{
 		$trans = new GoogleTranslate();
 		$result = $trans->translate($source, $target, $text);
-		echo $result;
+		return $result;
 		// global $apiKey;
 		// $ch = curl_init();
 

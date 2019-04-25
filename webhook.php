@@ -225,6 +225,7 @@
 				}
 				if (empty($submodelId)) {
 					$response = 'No encontre una version de tu carro con ese nombre, ¿Seguro que lo escribiste bien? Las versiones de tu carro son: ';
+					$buttons = [];
 					foreach ($submodels as $key => $submodel) {
 						if ($key < (count($submodels)-1)) {
 							$response .= $submodel['submodelName'].', ';
@@ -232,6 +233,7 @@
 						else {
 							$response .= 'o '.$submodel['submodelName'];
 						}
+						array_push($buttons, $engine['engineName']);
 					}
 				}
 				else {

@@ -84,7 +84,7 @@
 					$solicitedModel  = $ouputContexts[1]['parameters']['model'];
 					$availableModels = $partsTech->getModels($solicitedYear, $makeId, "");
 					foreach ($availableModels as $model) {
-						$modelName = $model['makeName'];
+						$modelName = $model['modelName'];
 						if ($modelName == $solicitedModel) {
 							$modelId = $model['modelId'];
 						}
@@ -101,7 +101,7 @@
 			}
 
 			$fulfillment = array(
-				"fulfillmentText" => $availableMakes
+				"fulfillmentText" => $makeId
 			);
 			echo(json_encode($fulfillment));
 			break;

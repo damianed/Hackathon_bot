@@ -232,6 +232,7 @@
 						}
 						else {
 							$response .= 'o '.$engine['engineName'];
+							array_push($buttons["quickReplies"], $engine['engineName']);
 						}
 					}
 				}
@@ -240,8 +241,8 @@
 
 			$fulfillment = array(
 				"fulfillmentText" => $response,
-				"outputContexts" => $outputContexts,
 				"quickReplies" => $buttons,
+				"outputContexts" => $outputContexts,
 			);
 			echo(json_encode($fulfillment));
 			break;

@@ -57,15 +57,13 @@
 			# code ...
  			break;
 		case 'submodel':
-			$response = "Hello";
 			if(empty($params['submodel'])) {
-				$response = "No me mandaste ningun modelo, ¿Cual es el model de tu carro?";
+				$response = "No me mandaste ninguna version, ¿Cual es la version de tu carro?";
 			}
 			else {
 				$solicitedYear = $params['outputContexts'][1]['parameters']['year'];
 				$solicitedMake  = $params['outputContexts'][0]['parameters']['submodel'];
 				$availableMakes = $partsTech->getMakes($year, "", "");
-				die(json_encode($availableMakes, JSON_PRETTY_PRINT));
 				foreach ($availableMakes as $make) {
 					$makeName = $make['makeName'];
 					if ($makeName == $solicitedMake) {
@@ -75,7 +73,7 @@
 				if (empty($id)) {
 					$solicitedModel = $params['outputContexts'][1]['parameters']['model'];
 					$submodels = $partsTech->getSubModels($year, $solicitedMake, $solicitedModel, "");
-					$response = 'No encontre la version de tu carro con ese nombre, ¿Seguro que lo escribiste bien? Las versiones de tu carro son: ';
+					$response = 'No encontre una version de tu carro con ese nombre, ¿Seguro que lo escribiste bien? Las versiones de tu carro son: ';
 					foreach ($submodels as $key => $submodel) {
 							$response .= $submodel['submodelName'].', ';
 					}

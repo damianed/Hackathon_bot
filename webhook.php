@@ -129,7 +129,7 @@
 			}
 
 			$fulfillment = array(
-				"fulfillmentText" => $response
+				"fulfillmentText" => $submodels
 			);
 			echo(json_encode($fulfillment));
 			break;

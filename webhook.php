@@ -206,7 +206,7 @@
 					$submodelName = $submodel["submodelName"];
 					if (strtolower($solicitedSubmodel) == strtolower($submodelName)) {
 						$submodelId  = $submodel['submodelId'];
-						$outputContexts[1]['parameters']["submodelId"] = $submodelId;
+						$outputContexts[2]['parameters']["submodelId"] = $submodelId;
 					}
 				}
 				if (empty($submodelId)) {

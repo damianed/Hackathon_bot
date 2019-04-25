@@ -148,6 +148,7 @@
 			echo(json_encode($fulfillment));
 			break;
 		case 'SearchPartName':
+			$outputContexts = $requestJson['queryResult']["outputContexts"];
 			$year = $params['year'];
 			$makeName = $params['make'];
 			$modelName = $params['model'];
@@ -156,6 +157,7 @@
 			foreach($allMakes as $make){
 				if($make["makeName"] == $makeName){
 					$makeId = $make["makeId"];
+					$ouputContexts[1]['parameters']['makeId'] = $makeId;
 					break;
 				}
 			}
@@ -172,6 +174,7 @@
 			foreach($models as $model){
 				if($model["modelName"] == $modelName){
 					$modelId = $model["modelId"];
+					$ouputContexts[1]['parameters']['modelId'] = $modelId;
 					break;
 				}
 			}
@@ -183,20 +186,18 @@
 				die;
 			}
 			$subModels = $partsTech->getSubModels($year, $makeId, $modelId, '');
-			$outputcontexts = $requestJson['queryResult']["outputContexts"];
-
-			$outputcontexts[] =	array(
-									"name" => $requestJson["session"]."/contexts/engineSelection",
-									"lifespanCount" => 1,
-									"parameters"=> array(
-										"submodelId" => $subModels[0]['submodelId'],
-									)
-								);
 			if(sizeof($subModels) < 2){
+				$outputContexts[] =	array(
+										"name" => $requestJson["session"]."/contexts/engineSelection",
+										"lifespanCount" => 1,
+										"parameters"=> array(
+											"submodelId" => $subModels[0]['submodelId'],
+										)
+									);
 				$response = "¿Cual es el motor que necesita?";
 				$fulfillment = array(
 					"fulfillmentText" => $response,
-					"outputContexts" => $outputcontexts,
+					"outputContexts" => $outputContexts,
 				);
 				echo(json_encode($fulfillment));
 				die;
@@ -216,6 +217,7 @@
 			$response .= "?";
 			$fulfillment = array(
 				"fulfillmentText" => $response,
+				"outputContexts" => $outputContexts,
 			);
 			echo(json_encode($fulfillment));
 			break;

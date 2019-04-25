@@ -177,7 +177,16 @@
 											"submodelId" => $subModels[0]['submodelId'],
 										)
 									);
-				$response = "¿Cual es el motor que necesita?";
+				$availableEngines = $partsTech->getEngines($year, $makeId, $modelId, $subModels[0]['submodelId']);
+				$response = 'Que motor tiene tu carro: ';
+				foreach ($availableEngines as $key => $engine) {
+					if ($key < (count($availableEngines)-1)) {
+						$response .= $engine['engineName'].', ';
+					}
+					else {
+						$response .= 'o '.$engine['engineName'];
+					}
+				}
 				$fulfillment = array(
 					"fulfillmentText" => $response,
 					"outputContexts" => $outputContexts,

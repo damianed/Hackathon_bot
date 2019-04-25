@@ -11,34 +11,34 @@
 	switch ($intentDisplayName) {
 		case 'partImage':
 		
-		$moreInfoContext = $outputContexts[0];
-		foreach ($outputContexts as $key => $oc) {
-			if(strpos($oc['name'], 'contexts/moreInfo') !== false) {
-				$moreInfoContext = $oc;
-				$ocid = $key;
-				break;
+			$moreInfoContext = $outputContexts[0];
+			foreach ($outputContexts as $key => $oc) {
+				if(strpos($oc['name'], 'contexts/moreinfo') !== false) {
+					$moreInfoContext = $oc;
+					$ocid = $key;
+					break;
+				}
 			}
-		}
-		$images = $moreInfoContext['parameters']['images'];
-		$text = array();
-		$partNum = $params['part_number'];
-		if($images[$partNum] != ''){
-			$texts[] = array (
-				'card' =>
-				array (
-					'title' => 'card title',
-					'subtitle' => 'card text',
-					'imageUri' => $images[$partNum],
-				),
+			$images = $moreInfoContext['parameters']['images'];
+			$text = array();
+			$partNum = $params['part_number'];
+			if($images[$partNum] != ''){
+				$texts[] = array (
+					'card' =>
+					array (
+						'title' => 'card title',
+						'subtitle' => 'card text',
+						'imageUri' => $images[$partNum],
+					),
+				);
+			}else{
+				$texts[] = ['text' => ['text' => ["No contamos con ninguna imagen para ese numero de parte"]]];
+			}
+			$fulfillment = array(
+				"fulfillmentMessages" => $texts
 			);
-		}else{
-			$texts[] = ['text' => ['text' => ["No contamos con ninguna imagen para ese numero de parte"]]];
-		}
-		$fulfillment = array(
-			"fulfillmentMessages" => $texts
-		);
-		echo json_encode($fulfillment);
-		die();
+			echo json_encode($fulfillment);
+			die();
 		break;
 		case 'search_part_number':
 			$stores = [

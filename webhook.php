@@ -25,12 +25,9 @@
 			$responseMsg['pre'] = "Ahorita tenemos disponibles siguientes piezas disponibles en estas tiendas: \n";
 			$foundPart = false;
 			$responseMsg['store'] ='';
-			$partExist = false;
 			foreach ($stores as $store) {
 				$storeId = $store['id'];
-				$parts = $partsTech->requestQuote($searchParams, $storeId)['parts'];
 				if(sizeof($parts) > 0) {
-					$partExist = true;
 					$storeData['parts'] = [];
 					$responseMsg['store'] .= "En la tienda de " . $store['supplierName'] ." que esta en ". $store['name']." tienen : \n";
 					foreach ($parts as $part) {
@@ -54,11 +51,7 @@
 			}
 
 			if($responseMsg['store'] == '') {
-				if($partExist) {
 					$response = "Lo siento, pero el producto con ese numero de parte no esta disponible por el momento";
-				} else {
-					$response = "Disculpa pero ese numero de parte no pertenece a ningun producto que tengamos registrado";
-				}
 			} else {
 				$response = $responseMsg['pre'] . $responseMsg['store'];
 			}

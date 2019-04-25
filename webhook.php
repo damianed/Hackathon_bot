@@ -40,7 +40,7 @@
 
 						if($part['quantity'] > 0) {
 							$partName = translate($partName, 'es', 'en');
-							$responseMsg['store'][] =  $quantity.' '.$partName.' con precio de '.  $part['price']['cost']."\n";
+							$responseMsg['store'][] =  $quantity.' '.$partName.' NP '.$part['partNumber'] .' con precio de '.  $part['price']['cost']."\n";
 							$foundPart = true;
 							if(sizeof($responseMsg['store']) > 9) {
 								break;
@@ -150,7 +150,7 @@
 
 								if($part['quantity'] > 0) {
 									$partname = translate($partName, 'es', 'en');
-									$responseMsg['store'][] =  $quantity.' '.$partName.' con precio de '.  $part['price']['cost']."\n";
+									$responseMsg['store'][] =  $quantity.' '.$partName.' NP '.$part['partNumber'] .' con precio de '.  $part['price']['cost']."\n";
 									$foundPart = true;
 									if(sizeof($responseMsg['store']) > 9) {
 										break;

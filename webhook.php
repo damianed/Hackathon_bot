@@ -52,10 +52,87 @@
 			# code ...
 			break;
 		case 'submodel':
-			# code ...
+			if(empty($params['submodel'])) {
+				$response = "No me mandaste ningun modelo, ¿Cual es el model de tu carro?";
+			} 
+			else {
+				$solicitedYear = $params['outputContexts'][1]['parameters']['year'];
+				$solicitedMake  = $params['outputContexts'][0]['parameters']['submodel'];
+				$availableMakes = $partsTech.getMakes($year, "", "");
+				foreach ($availableMakes as $key => $make) {
+					$makeName = $make['makeName'];
+					if ($makeName == $solicitedMake) {
+						$id = $make[$key]['makeId'];
+					}
+				}		
+				if (empty($id)) {
+					$solicitedModel = $params['outputContexts'][1]['parameters']['model'];
+					$submodels = $partsTech.getSubModels($year, $solicitedMake, $solicitedModel, "");
+					$response = 'No encontre la version de tu carro con ese nombre, ¿Seguro que lo escribiste bien? Las versiones de tu carro son: ';
+					foreach ($submodels as $key => $submodel) {
+							$response += $submodel['submodelName'].', ';
+					}
+				}
+				else {
+					$response = 'Cual es el Motor de tu carro?';
+				}
+			}
+			
+			$fulfillment = array(
+				"fulfillmentText" => $response
+			);
+			echo(json_encode($fulfillment));
 			break;
 		case 'SearchPartName':
-			# code ...
+			$year = $params['year'];
+			$makeName = $params['make'];
+			$modelName = $params['model'];
+			$makeId = 0;
+			$allMakes = $partsTech->getMakes($year);
+			foreach($allMakes as $make){
+				if($make["makeName"] == $makeName){
+					$makeId = $make["makeId"];
+					break;
+				}
+			}
+			if($makeId == 0){
+				$fulfillment = array(
+					"fulfillmentText" => "No encontre la marca ".$makeName.", ¿Estas seguro que lo escribiste bien?"
+				);
+				echo(json_encode($fulfillment));
+				break;
+			}
+
+			$models = $partsTech->getModels($year, $makeId);
+			$modelId = 0;
+			foreach($models as $model){
+				if($model["modelName"] == $modelName){
+					$modelId = $model["modelId"];
+					break;
+				}
+			}
+			if($modelId == 0){
+				$fulfillment = array(
+					"fulfillmentText" => "No encontre la marca ".$modelName.", ¿Estas seguro que lo escribiste bien?"
+				);
+				echo(json_encode($fulfillment));
+				break;
+			}
+			$subModels = $partsTech->getSubModels($year, $make, $modelId);
+			$response = "¿De cual versión es: ";
+			foreach($subModels as $index=>$submodel){
+				$response .= "$subModel";
+				if($index < sizeof($subModels) - 2){
+					$response .= ", ";
+				}else if($index < sizeof($subModels)){
+					$respose .= "o ";
+				}
+			}
+			$response .= "?";
+			$fulfillment = array(
+				"fulfillmentText" => $response,
+			);
+			echo(json_encode($fulfillment));
 			break;
 
 		default:

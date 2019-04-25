@@ -6,7 +6,7 @@
 
 	$intentDisplayName = $requestJson['queryResult']['intent']['displayName'];
 	$params = $requestJson['queryResult']['parameters'];
-	$ouputContexts = $requestJson['queryResult']['outputContexts'];
+	$outputContexts = $requestJson['queryResult']['outputContexts'];
 	$partsTech = new PartsTech();
 	switch ($intentDisplayName) {
 		case 'partBrand':
@@ -79,24 +79,10 @@
 			}
 			else {
 				$solicitedYear = $ouputContexts[1]['parameters']['year'];
-				$solicitedMake  = $ouputContexts[1]['parameters']['make'];
-				$availableMakes = $partsTech->getMakes($solicitedYear, "", "");
-				foreach ($availableMakes as $make) {
-					$makeName = $make['makeName'];
-					if ($makeName == $solicitedMake) {
-						$makeId = $make['makeId'];
-					}
-				}
-				$solicitedModel  = $ouputContexts[1]['parameters']['model'];
-				$availableModels = $partsTech->getModels($solicitedYear, $makeId, "");
-				foreach ($availableModels as $model) {
-					$modelName = $model['modelName'];
-					if ($modelName == $solicitedModel) {
-						$modelId = $model['modelId'];
-					}
-				}
+				$solicitedMakeId  = $ouputContexts[1]['parameters']['makeId'];
+				$solicitedModelId  = $ouputContexts[1]['parameters']['modelId'];
 				$solicitedSubmodel = $ouputContexts[1]['parameters']['submodel'];
-				$submodels = $partsTech->getSubModels($solicitedYear, $makeId, $modelId, "");
+				$submodels = $partsTech->getSubModels($solicitedYear, $solicitedMakeId, $solicitedModelId, "");
 				foreach ($submodels as $submodel) {
 					$submodelName = $submodel["submodelName"];
 					if ($solicitedSubmodel == $submodelName) {
@@ -130,7 +116,7 @@
 			}
 
 			$fulfillment = array(
-				"fulfillmentText" => $availableEngines
+				"fulfillmentText" => $submodels
 			);
 			echo(json_encode($fulfillment));
 			break;
@@ -144,7 +130,7 @@
 			foreach($allMakes as $make){
 				if($make["makeName"] == $makeName){
 					$makeId = $make["makeId"];
-					$ouputContexts[1]['parameters']['makeId'] = $makeId;
+					$outputContexts[1]['parameters']["makeId"] = $makeId;
 					break;
 				}
 			}
@@ -161,7 +147,7 @@
 			foreach($models as $model){
 				if($model["modelName"] == $modelName){
 					$modelId = $model["modelId"];
-					$ouputContexts[1]['parameters']['modelId'] = $modelId;
+					$outputContexts[1]['parameters']['modelId'] = $modelId;
 					break;
 				}
 			}
@@ -207,7 +193,7 @@
 				"outputContexts" => $outputContexts,
 			);
 			echo(json_encode($fulfillment));
-			break;
+			die;
 
 		default:
 			# code...

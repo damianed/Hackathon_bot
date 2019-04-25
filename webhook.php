@@ -30,7 +30,7 @@
 				$parts = $partsTech->requestQuote($searchParams, $storeId)['parts'];
 				if(sizeof($parts) > 0) {
 					$storeData['parts'] = [];
-					$responseMsg['store'] .= "En la tienda de " . $store['supplierName'] ." que esta en ". $store['name']." tienen : \n";
+					$responseMsg['store'][] = "En la tienda de " . $store['supplierName'] ." que esta en ". $store['name']." tienen : \n";
 					foreach ($parts as $part) {
 						$partName = $part['partName'];
 						$quantity = $part['quantity'];

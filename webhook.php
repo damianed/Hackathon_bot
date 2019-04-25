@@ -40,13 +40,12 @@
 					$response .= 'Hay '.$part['quantity'].' '.$part['partName']. ' con precio de '. $part['price']."\n";
 				}
 			}
-			
+
 
 			$fulfillment = array(
 				"fulfillmentText" => $response
 			);
-			echo(json_encode($fulfillment));
-			die();
+			die(json_encode($fulfillment));
 			break;
 		case 'engine':
 			# code ...

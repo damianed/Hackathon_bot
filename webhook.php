@@ -84,7 +84,7 @@
 				$solicitedEngine = $params['engine'];
 				$engines = $partsTech->getEngines($solicitedYear, $solicitedMakeId, $solicitedModelId, $solicitedSubmodelId);
 				foreach ($engines as $engine) {
-					$engineName = $engine["engineName"];
+					$engineName = join(' ', explode('  ',$engine["engineName"]));
 					if ($solicitedEngine == $engineName) {
 						$engineId  = $engine['engineId'];
 						$engineParams = $engine['engineParams'];

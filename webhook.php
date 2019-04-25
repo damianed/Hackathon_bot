@@ -6,7 +6,7 @@
 
 	$intentDisplayName = $requestJson['queryResult']['intent']['displayName'];
 	$params = $requestJson['queryResult']['parameters'];
-	$ouputContexts = $requestJson['queryResult']['outputContexts'];
+	$outputContexts = $requestJson['queryResult']['outputContexts'];
 	$partsTech = new PartsTech();
 	switch ($intentDisplayName) {
 		case 'partBrand':
@@ -62,12 +62,18 @@
 				}
 				$textToTranslate = rtrim($textToTranslate,"|");
 
-				$strNamesSpanish = translate($textToTranslate, 'en-es')['text'][0];
-				$partNamesSpanish = explode('|', $strNamesSpanish);
+				$res = translate($textToTranslate, 'en-es');
+				$strNamesSpanish = $res['text'][0];
 
-				for ($i=0; $i <sizeof($partNamesSpanish) ; $i++) {
-					$responseMsg['store'] = str_replace('['.($i+1).']',$partName, $responseMsg['store']);
+				$partNamesSpanish = explode('|', $strNamesSpanish);
+				if(sizeof($partNamesSpanish) > 0) {
+					for ($i=0; $i <sizeof($partNamesSpanish) ; $i++) {
+						$responseMsg['store'] = str_replace('['.($i+1).']',$partName, $responseMsg['store']);
+					}
+				} else {
+					$responseMsg['store'] = str_replace('['.(1).']',$strNamesSpanish, $responseMsg['store']);
 				}
+
 
 				$response = $responseMsg['pre'] . $responseMsg['store'];
 			}
@@ -99,7 +105,7 @@
 				if (empty($submodelId)) {
 					$response = 'No encontre una version de tu carro con ese nombre, ¿Seguro que lo escribiste bien? Las versiones de tu carro son: ';
 					foreach ($submodels as $key => $submodel) {
-						if ($key < (count($submodels)-1)) {
+						if ($key < count($submodels)) {
 							$response .= $submodel['submodelName'].', ';
 						}
 						else {
@@ -108,10 +114,10 @@
 					}
 				}
 				else {
-					$availableEngines = $partsTech->getEngines($solicitedYear, $makeId, $modelId, $submodelId);
+					$availableEngines = $partsTech->getModels($solicitedYear, $makeId, $modelId, $submodelId);
 					$response = 'Que motor tiene tu carro: ';
 					foreach ($availableEngines as $key => $engine) {
-						if ($key < (count($availableEngines)-1)) {
+						if ($key < count($availableEngines)) {
 							$response .= $engine['engineName'].', ';
 						}
 						else {
@@ -123,11 +129,12 @@
 			}
 
 			$fulfillment = array(
-				"fulfillmentText" => $response
+				"fulfillmentText" => $availableEngines
 			);
 			echo(json_encode($fulfillment));
 			break;
 		case 'SearchPartName':
+			$outputContexts = $requestJson['queryResult']["outputContexts"];
 			$year = $params['year'];
 			$makeName = $params['make'];
 			$modelName = $params['model'];
@@ -136,6 +143,7 @@
 			foreach($allMakes as $make){
 				if($make["makeName"] == $makeName){
 					$makeId = $make["makeId"];
+					$outputContexts[1]['parameters']["makeId"] = $makeId;
 					break;
 				}
 			}
@@ -152,6 +160,7 @@
 			foreach($models as $model){
 				if($model["modelName"] == $modelName){
 					$modelId = $model["modelId"];
+					$outputContexts[1]['parameters']['modelId'] = $modelId;
 					break;
 				}
 			}
@@ -163,18 +172,18 @@
 				die;
 			}
 			$subModels = $partsTech->getSubModels($year, $makeId, $modelId, '');
-			$outputcontexts = $requestJson['queryResult']["outputContexts"];
-
-			$outputcontexts[] =	array(
-									"name" => $requestJson['queryResult']["session"]."contexts/engineSelection",
-									"lifespanCount" => 1,
-									"parameters"=> array()
-								);
 			if(sizeof($subModels) < 2){
+				$outputContexts[] =	array(
+										"name" => $requestJson["session"]."/contexts/engineSelection",
+										"lifespanCount" => 1,
+										"parameters"=> array(
+											"submodelId" => $subModels[0]['submodelId'],
+										)
+									);
 				$response = "¿Cual es el motor que necesita?";
 				$fulfillment = array(
 					"fulfillmentText" => $response,
-					"outputContexts" => $outputcontexts,
+					"outputContexts" => $outputContexts,
 				);
 				echo(json_encode($fulfillment));
 				die;
@@ -194,9 +203,10 @@
 			$response .= "?";
 			$fulfillment = array(
 				"fulfillmentText" => $response,
+				"outputContexts" => $outputContexts,
 			);
 			echo(json_encode($fulfillment));
-			break;
+			die;
 
 		default:
 			# code...

@@ -246,8 +246,10 @@
 							$response
 						),
 					),
-						"quickReplies" => array(
-							"quickReplies" => $buttons,
+						array(
+							"quickReplies" => array(
+								"quickReplies" => $buttons,
+							),
 						),
 					),
 				],

@@ -158,36 +158,4 @@ class PartsTech
 		return $resp;
 	}
 }
-$start_time = microtime(true);
-require('translate.php');
-$partsTech = new PartsTech();
-$stores = $partsTech->getStore();
-
-$partsByStore = [];
-
-$searchParams = [	"partNumber" => ["18042"]];
-$foundPart = false;
-foreach ($stores as $store) {
-	$storeId = $store['id'];
-	$parts = $partsTech->requestQuote($searchParams, $storeId)['parts'];
-
-	$storeData = [];
-	$storeData['name'] = $store['name'];
-	$storeData['supplierName'] = $store['supplier']['name'];
-	$storeData['parts'] = [];
-	if($parts) {
-		foreach ($parts as $part) {
-			// $partName = translate($part['partName'], 'en-es');
-			$partName = $part['partName'];
-			$storeData['parts'][] = ['partName' => $partName, 'price' => $part['price']['list'], 'quantity' => $part['availability'][0]['quantity']];
-		}
-		$partsByStore[] = $storeData;
-		$foundPart = true;
-	}
-	if($foundPart) {
-		break;
-	}
-}
-
-
  ?>

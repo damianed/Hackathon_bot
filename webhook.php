@@ -70,8 +70,9 @@
 			echo json_encode($fulfillment);
 			break;
 		case 'engine':
-			if(empty($params['engine'])) {
+			if(!$params['engine']) {
 				$response = "No me mandaste ningun motor, ¿Cual motor tiene tu auto?";
+				die();
 			}
 			else {
 

@@ -214,7 +214,7 @@
 			}
 
 			$fulfillment = array(
-				"fulfillmentText" => $response,
+				"fulfillmentText" => $submodels,
 				"outputContexts" => $outputContexts,
 			);
 			echo(json_encode($fulfillment));

@@ -37,9 +37,8 @@
 						if($quantity == 0) {
 							$quantity = $part['availability'][0]['quantity'];
 						}
-						// $storeData['parts'][] = ['partName' => $partName, 'price' => $part['price']['list'], 'quantity' => $part['availability'][0]['quantity']];
+
 						if($part['quantity'] > 0) {
-							// $partName = translate($part['partName'], 'en-es');
 							$responseMsg['store'] .=  $quantity.' '.$partName. ' con precio de '.  $part['price']['cost']."\n";
 							$foundPart = true;
 						}
@@ -51,6 +50,8 @@
 				}
 				$responseMsg['store'] ='';
 			}
+
+			$partName = translate($part['partName'], 'en-es');
 			if($responseMsg['store'] == '') {
 				$response = "Lo siento, pero parece que esa pieza no esta disponible o no exite";
 			} else {

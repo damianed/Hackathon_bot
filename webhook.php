@@ -20,16 +20,17 @@
 			];
 
 			$searchParams = [	"partNumber" => [$params['part_number']]];
-			$response = "Ahorita tenemos disponibles siguientes piezas disponibles en estas tiendas: \n";
+			$responseMsg = [];
+			$responseMsg['pre'] = "Ahorita tenemos disponibles siguientes piezas disponibles en estas tiendas: \n";
 			$foundPart = false;
+			$responseMsg['store'] ='';
 			foreach ($stores as $store) {
 				$storeId = $store['id'];
 				$parts = $partsTech->requestQuote($searchParams, $storeId)['parts'];
 				if(sizeof($parts) > 0) {
 					$storeData['parts'] = [];
-					$response .= "En la tienda de " . $store['supplierName'] ." que esta en ". $store['name']." tienen : \n";
+					$responseMsg['store'] .= "En la tienda de " . $store['supplierName'] ." que esta en ". $store['name']." tienen : \n";
 					foreach ($parts as $part) {
-						// $partName = translate($part['partName'], 'en-es');
 						$partName = $part['partName'];
 						$quantity = $part['quantity'];
 						if($quantity == 0) {
@@ -37,7 +38,8 @@
 						}
 						// $storeData['parts'][] = ['partName' => $partName, 'price' => $part['price']['list'], 'quantity' => $part['availability'][0]['quantity']];
 						if($part['quantity'] > 0) {
-							$response .=  $quantity.' '.$partName. ' con precio de '.  $part['price']['cost']."\n";
+							// $partName = translate($part['partName'], 'en-es');
+							$responseMsg['store'] .=  $quantity.' '.$partName. ' con precio de '.  $part['price']['cost']."\n";
 							$foundPart = true;
 						}
 					}
@@ -46,6 +48,12 @@
 				if($foundPart) {
 					break;
 				}
+				$responseMsg['store'] ='';
+			}
+			if($responseMsg['store'] == '') {
+				$response = "Lo siento, pero parece que esa pieza no esta disponible o no exite";
+			} else {
+				$response = $responseMsg['pre'] . $responseMsg['store'];
 			}
 
 			$fulfillment = array(
@@ -118,7 +126,7 @@
 			}
 			if($modelId == 0){
 				$fulfillment = array(
-					"fulfillmentText" => "No encontre la marca ".$modelName.", ¿Estas seguro que lo escribiste bien?"
+					"fulfillmentText" => "No encontre el modelo ".$modelName.", ¿Estas seguro que lo escribiste bien?"
 				);
 				echo(json_encode($fulfillment));
 				break;

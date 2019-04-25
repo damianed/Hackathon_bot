@@ -93,7 +93,7 @@
 			}
 
 			$fulfillment = array(
-				"fulfillmentText" => $ouputContexts
+				"fulfillmentText" => $solicitedYear
 			);
 			echo(json_encode($fulfillment));
 			break;

@@ -10,19 +10,30 @@
 	$partsTech = new PartsTech();
 	switch ($intentDisplayName) {
 		case 'partImage':
-		// $texts[] = array (
-		// 	'card' =>
-		// 	array (
-		// 		'title' => 'card title',
-		// 		'subtitle' => 'card text',
-		// 		'imageUri' => 'https://punchout.beta.partstech.com/image?url=http%3A//econtent.autozone.com%3A24999/znetcs/additional-prod-images/en/us/sie/228242005002z/06/image/4/',
-		// 	),
-		// );
-		// $fulfillment = array(
-		// 	"fulfillmentMessages" => $texts
-		// );
-
-			break;
+		
+		$moreInfoContext = $outputContexts[0];
+		foreach ($outputContexts as $key => $oc) {
+			if(strpos($oc['name'], 'contexts/moreInfo') !== false) {
+				$moreInfoContext = $oc;
+				$ocid = $key;
+				break;
+			}
+		}
+		$images = $moreInfoContext['parameters']['images'];
+		$text = array();
+		$partNum = $params['part_number'];
+		$texts[] = array (
+			'card' =>
+			array (
+				'title' => 'card title',
+				'subtitle' => 'card text',
+				'imageUri' => $images[$partNum],
+			),
+		);
+		$fulfillment = array(
+			"fulfillmentMessages" => $texts
+		);
+		break;
 		case 'search_part_number':
 			$stores = [
 				['id' => 149918,"name" => "Avenida Felipe Ángeles No. 333-A, Col. Progreso, Guadalajara, JA 44730, MX", "supplierName" => "NAPA Auto Parts" ],
@@ -227,7 +238,7 @@
 				if (count($submodels) < 2) {
 					$outputContexts[] =	array(
 						"name" => $requestJson["session"]."/contexts/engineSelection",
-						"lifespanCount" => 1,
+						"lifespanCount" => 5,
 						"parameters"=> array(
 							"submodelId" => $subModels[0]['submodelId'],
 						)
@@ -361,7 +372,7 @@
 			if(sizeof($subModels) < 2){
 				$outputContexts[] = array(
 										"name" => $requestJson["session"]."/contexts/engineSelection",
-										"lifespanCount" => 1,
+										"lifespanCount" => 5,
 										"parameters"=> array(
 											"submodelId" => $subModels[0]['submodelId'],
 										)

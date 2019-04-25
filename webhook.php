@@ -321,12 +321,34 @@
 					else {
 						$response .= 'o '.$engine['engineName'];
 					}
+					$buttons[] = $engine['engineName'];
 				}
 				$response .= '?';
-				$fulfillment = array(
-					"fulfillmentText" => $response,
-					"outputContexts" => $outputContexts,
-				);
+				$fulfillment =
+				array (
+					'fulfillmentMessages' => 
+					array (
+					  0 => 
+					  array (
+						'text' => 
+						array (
+						  'text' => 
+						  array (
+							0 => $response
+						  ),
+						),
+					  ),
+					  1 => 
+					  array (
+						'quickReplies' => 
+						array (
+						  'quickReplies' => 
+							$buttons
+						),
+					  ),
+					),
+				"outputContexts" => $outputContexts,
+			);
 				echo(json_encode($fulfillment));
 				die;
 			}

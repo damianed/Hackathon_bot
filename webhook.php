@@ -33,6 +33,8 @@
 		$fulfillment = array(
 			"fulfillmentMessages" => $texts
 		);
+		echo json_encode($fulfillment);
+		die();
 		break;
 		case 'search_part_number':
 			$stores = [

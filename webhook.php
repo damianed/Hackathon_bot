@@ -65,6 +65,14 @@
 				foreach ($responseMsg['store'] as $text) {
 					$texts[] = ['text' => ['text' => [$text]]];
 				}
+				$text[] = array (
+					'card' =>
+					array (
+						'title' => 'card title',
+						'subtitle' => 'card text',
+						'imageUri' => 'https://punchout.beta.partstech.com/image?url=http%3A//econtent.autozone.com%3A24999/znetcs/additional-prod-images/en/us/sie/228242005002z/06/image/4/',
+					),
+				)
 				$fulfillment = array(
 					"fulfillmentMessages" => $texts
 				);
@@ -171,6 +179,15 @@
 						foreach ($responseMsg['store'] as $text) {
 							$texts[] = ['text' => ['text' => [$text]]];
 						}
+
+						$text[] = array (
+							'card' =>
+							array (
+								'title' => 'card title',
+								'subtitle' => 'card text',
+								'imageUri' => 'https://punchout.beta.partstech.com/image?url=http%3A//econtent.autozone.com%3A24999/znetcs/additional-prod-images/en/us/sie/228242005002z/06/image/4/',
+							),
+						)
 						$fulfillment = array(
 							"fulfillmentMessages" => $texts
 						);

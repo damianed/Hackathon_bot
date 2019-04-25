@@ -230,24 +230,44 @@
 					$availableEngines = $partsTech->getEngines($solicitedYear, $solicitedMakeId, $solicitedModelId, $submodelId);
 					$response = 'Que motor tiene tu carro: ';
 					$buttons = [];
-					$buttons["quickReplies"] = [];
 					foreach ($availableEngines as $key => $engine) {
 						if ($key < (count($availableEngines)-1)) {
 							$response .= $engine['engineName'].', ';
-							array_push($buttons["quickReplies"], $engine['engineName']);
 						}
 						else {
 							$response .= 'o '.$engine['engineName'];
+							array_push($buttons, $engine['engineName']);
 						}
+						array_push($buttons, $engine['engineName']);
 					}
 				}
 				$response .= '?';
 			}
 
-			$fulfillment = array(
-				"fulfillmentText" => $response,
+			$fulfillment =
+				array (
+					'fulfillmentMessages' => 
+					array (
+					  0 => 
+					  array (
+						'text' => 
+						array (
+						  'text' => 
+						  array (
+							0 => $response
+						  ),
+						),
+					  ),
+					  1 => 
+					  array (
+						'quickReplies' => 
+						array (
+						  'quickReplies' => 
+							$buttons
+						),
+					  ),
+					),
 				"outputContexts" => $outputContexts,
-				"quickReplies" => $buttons,
 			);
 			echo(json_encode($fulfillment));
 			break;

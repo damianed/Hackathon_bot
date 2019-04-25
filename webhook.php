@@ -328,30 +328,10 @@
 					else {
 						$response .= 'o '.$engine['engineName'];
 					}
+					$buttons[] = $engine['engineName'];
 				}
 				$response .= '?';
-				$fulfillment = array(
-					"fulfillmentText" => $response,
-					"outputContexts" => $outputContexts,
-				);
-				echo(json_encode($fulfillment));
-				die;
-			}
-			$response = "¿De cual versión es: ";
-
-			foreach($subModels as $index=>$subModel){
-				$response .= $subModel["submodelName"];
-				if($index == sizeof($subModels) - 2){
-					$response .= " o ";
-				}else{
-					if($index < sizeof($subModels) - 1){
-						$response .= ", ";
-					}
-				}
-				$buttons[] = $subModel["submodelName"];
-			}
-			$response .= "?";
-			$fulfillment =
+				$fulfillment =
 				array (
 					'fulfillmentMessages' =>
 					array (
@@ -374,6 +354,26 @@
 						),
 					  ),
 					),
+				"outputContexts" => $outputContexts,
+			);
+				echo(json_encode($fulfillment));
+				die;
+			}
+			$response = "¿De cual versión es: ";
+
+			foreach($subModels as $index=>$subModel){
+				$response .= $subModel["submodelName"];
+				if($index == sizeof($subModels) - 2){
+					$response .= " o ";
+				}else{
+					if($index < sizeof($subModels) - 1){
+						$response .= ", ";
+					}
+				}
+			}
+			$response .= "?";
+			$fulfillment = array(
+				"fulfillmentText" => $response,
 				"outputContexts" => $outputContexts,
 			);
 			echo(json_encode($fulfillment));

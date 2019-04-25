@@ -25,7 +25,7 @@
 			$response = "Ahorita tenemos disponibles siguientes piezas disponibles en estas tiendas: \n";
 			foreach ($stores as $store) {
 				$storeId = $store['id'];
-				$result = $partsTech->requestQuote($searchParams, $storeId);
+				$parts = $partsTech->requestQuote($searchParams, $storeId)['parts'];
 				if(sizeof($parts) > 0) {
 					$storeData['parts'] = [];
 					$response .= "En la tienda de " . $store['supplierName'] ." que esta en ". $store['name']."tienen : \n";

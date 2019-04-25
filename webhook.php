@@ -210,6 +210,7 @@
 						)
 					);
 					$response = "¿Cual es el motor que necesita?";
+					$outputContexts[$ocid] = $outputContext;
 					$fulfillment = array(
 						"fulfillmentText" => $response,
 						"outputContexts" => $outputContexts,

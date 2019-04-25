@@ -223,9 +223,12 @@
 				else {
 					$availableEngines = $partsTech->getEngines($solicitedYear, $solicitedMakeId, $solicitedModelId, $submodelId);
 					$response = 'Que motor tiene tu carro: ';
+					$buttons = [];
+					$buttons["quickReplies"] = [];
 					foreach ($availableEngines as $key => $engine) {
 						if ($key < (count($availableEngines)-1)) {
 							$response .= $engine['engineName'].', ';
+							array_push($buttons["quickReplies"], $engine['engineName']);
 						}
 						else {
 							$response .= 'o '.$engine['engineName'];
@@ -238,6 +241,7 @@
 			$fulfillment = array(
 				"fulfillmentText" => $response,
 				"outputContexts" => $outputContexts,
+				"quickReplies" => $buttons,
 			);
 			echo(json_encode($fulfillment));
 			break;

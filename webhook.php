@@ -39,6 +39,7 @@
 
 						if($part['quantity'] > 0) {
 							$responseMsg['store'] .=  $quantity.' '.$partName.' con precio de '.  $part['price']['cost']."\n";
+							die(json_encode(translate($partName, 'es')));
 							$foundPart = true;
 						}
 					}

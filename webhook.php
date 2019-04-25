@@ -78,12 +78,18 @@
 				die();
 			}
 			else {
-
-				$partName = $outputContexts[1]['parameters']['partName'];
-				$solicitedYear = $outputContexts[1]['parameters']['year'];
-				$solicitedMakeId  = $outputContexts[1]['parameters']['makeId'];
-				$solicitedModelId  = $outputContexts[1]['parameters']['modelId'];
-				$solicitedSubmodelId = $outputContexts[1]['parameters']['submodelId'];
+				$outputContext = $outputContexts[1];
+				foreach ($outputContexts as $oc) {
+					if(strpos($oc['name'], 'contexts/part_search') !== false) {
+						$outputContext = $oc;
+						break;
+					}
+				}
+				$partName = $outputContext['parameters']['partName'];
+				$solicitedYear = $outputContext['parameters']['year'];
+				$solicitedMakeId  = $outputContext['parameters']['makeId'];
+				$solicitedModelId  = $outputContext['parameters']['modelId'];
+				$solicitedSubmodelId = $outputContext['parameters']['submodelId'];
 				$solicitedEngine = $params['engine'];
 				$engines = $partsTech->getEngines($solicitedYear, $solicitedMakeId, $solicitedModelId, $solicitedSubmodelId);
 				foreach ($engines as $engine) {
@@ -347,23 +353,23 @@
 			$response .= "?";
 			$fulfillment =
 				array (
-					'fulfillmentMessages' => 
+					'fulfillmentMessages' =>
 					array (
-					  0 => 
+					  0 =>
 					  array (
-						'text' => 
+						'text' =>
 						array (
-						  'text' => 
+						  'text' =>
 						  array (
 							0 => $response
 						  ),
 						),
 					  ),
-					  1 => 
+					  1 =>
 					  array (
-						'quickReplies' => 
+						'quickReplies' =>
 						array (
-						  'quickReplies' => 
+						  'quickReplies' =>
 							$buttons
 						),
 					  ),

@@ -96,24 +96,45 @@
 						$makeId = $make['makeId'];
 					}
 				}
-				if (empty($makeId)) {
-					$solicitedModel  = $ouputContexts[1]['parameters']['model'];
-					$availableModels = $partsTech->getModels($solicitedYear, $makeId, "");
-					foreach ($availableModels as $model) {
-						$modelName = $model['modelName'];
-						if ($modelName == $solicitedModel) {
-							$modelId = $model['modelId'];
-						}
+				$solicitedModel  = $ouputContexts[1]['parameters']['model'];
+				$availableModels = $partsTech->getModels($solicitedYear, $makeId, "");
+				foreach ($availableModels as $model) {
+					$modelName = $model['modelName'];
+					if ($modelName == $solicitedModel) {
+						$modelId = $model['modelId'];
 					}
-					$submodels = $partsTech->getSubModels($solicitedYear, $makeId, $modelId, "");
+				}
+				$submodels = $partsTech->getSubModels($solicitedYear, $makeId, $modelId, "");
+				foreach ($submodels as $submodel) {
+					$submodelName = $submodel["submodelName"];
+					if ($solicitedModel == $submodelName) {
+						$submodelId  = $submodel['submodelId'];
+					}
+				}
+				if (empty($submodelId)) {
 					$response = 'No encontre una version de tu carro con ese nombre, ¿Seguro que lo escribiste bien? Las versiones de tu carro son: ';
-					foreach ($submodels as $submodel) {
+					foreach ($submodels as $key => $submodel) {
+						if ($key < count($submodels)) {
 							$response .= $submodel['submodelName'].', ';
+						} 
+						else {
+							$response .= 'o '.$submodel['submodelName'];
+						}
 					}
 				}
 				else {
-					$response = 'Cual es el Motor de tu carro?';
+					$availableEngines = $partsTech->getModels($solicitedYear, $makeId, $modelId, $submodelId);
+					foreach ($availableEngines as $engine) {
+						$response = 'Que motor tiene tu carro: ';
+						if ($key < count($availableEngines)) {
+							$response .= $engine['engineName'].', ';
+						} 
+						else {
+							$response .= 'o '.$engine['engineName'];
+						}
+					}
 				}
+				$response .= '?';
 			}
 
 			$fulfillment = array(

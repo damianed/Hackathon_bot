@@ -188,13 +188,20 @@
 				$response = "No me mandaste ninguna version, ¿Cual es la version de tu carro?";
 			}
 			else {
-				$solicitedYear = $outputContexts[2]['parameters']['year'];
-				$solicitedMakeId  = $outputContexts[2]['parameters']['makeId'];
-				$solicitedModelId  = $outputContexts[2]['parameters']['modelId'];
-				$solicitedSubmodel = $outputContexts[2]['parameters']['submodel'];
+				$outputContext = $outputContexts[1];
+				foreach ($outputContexts as $oc) {
+					if(strpos($oc['name'], 'contexts/part_search') !== false) {
+						$outputContext = $oc;
+						break;
+					}
+				}
+				$solicitedYear = $outputContext['parameters']['year'];
+				$solicitedMakeId  = $outputContext['parameters']['makeId'];
+				$solicitedModelId  = $outputContext['parameters']['modelId'];
+				$solicitedSubmodel = $outputContext['parameters']['submodel'];
 				$submodels = $partsTech->getSubModels($solicitedYear, $solicitedMakeId, $solicitedModelId, "");
 				if (count($submodels) < 2) {
-					$outputContexts[] =	array(
+					$outputContext[] =	array(
 						"name" => $requestJson["session"]."/contexts/engineSelection",
 						"lifespanCount" => 1,
 						"parameters"=> array(
@@ -204,7 +211,7 @@
 					$response = "¿Cual es el motor que necesita?";
 					$fulfillment = array(
 						"fulfillmentText" => $response,
-						"outputContexts" => $outputContexts,
+						"outputContexts" => $outputContext,
 					);
 					echo(json_encode($fulfillment));
 					die;
@@ -213,7 +220,7 @@
 					$submodelName = $submodel["submodelName"];
 					if (strtolower($solicitedSubmodel) == strtolower($submodelName)) {
 						$submodelId  = $submodel['submodelId'];
-						$outputContexts[2]['parameters']["submodelId"] = $submodelId;
+						$outputContext['parameters']["submodelId"] = $submodelId;
 					}
 				}
 				if (empty($submodelId)) {
@@ -272,7 +279,13 @@
 			echo(json_encode($fulfillment));
 			break;
 		case 'SearchPartName':
-			$outputContexts = $requestJson['queryResult']["outputContexts"];
+			$outputContext = $outputContexts[1];
+			foreach ($outputContexts as $oc) {
+				if(strpos($oc['name'], 'contexts/part_search') !== false) {
+					$outputContext = $oc;
+					break;
+				}
+			}
 			$year = $params['year'];
 			$makeName = $params['make'];
 			$modelName = $params['model'];
@@ -281,7 +294,7 @@
 			foreach($allMakes as $make){
 				if($make["makeName"] == $makeName){
 					$makeId = $make["makeId"];
-					$outputContexts[1]['parameters']["makeId"] = $makeId;
+					$outputContext['parameters']["makeId"] = $makeId;
 					break;
 				}
 			}
@@ -298,7 +311,7 @@
 			foreach($models as $model){
 				if($model["modelName"] == $modelName){
 					$modelId = $model["modelId"];
-					$outputContexts[1]['parameters']['modelId'] = $modelId;
+					$outputContext['parameters']['modelId'] = $modelId;
 					break;
 				}
 			}
@@ -311,14 +324,14 @@
 			}
 			$subModels = $partsTech->getSubModels($year, $makeId, $modelId, '');
 			if(sizeof($subModels) < 2){
-				$outputContexts[1]['parameters']["submodelId"] = array(
+				$outputContext['parameters']["submodelId"] = array(
 										"name" => $requestJson["session"]."/contexts/engineSelection",
 										"lifespanCount" => 1,
 										"parameters"=> array(
 											"submodelId" => $subModels[0]['submodelId'],
 										)
 									);
-				$outputContexts[1]['parameters']["submodelId"] =	$subModels[0]['submodelId'];
+				$outputContext['parameters']["submodelId"] =	$subModels[0]['submodelId'];
 				$availableEngines = $partsTech->getEngines($year, $makeId, $modelId, $subModels[0]['submodelId']);
 				$response = 'Que motor tiene tu carro: ';
 				foreach ($availableEngines as $key => $engine) {
@@ -354,7 +367,7 @@
 						),
 					  ),
 					),
-				"outputContexts" => $outputContexts,
+				"outputContexts" => $outputContext,
 			);
 				echo(json_encode($fulfillment));
 				die;
@@ -374,7 +387,7 @@
 			$response .= "?";
 			$fulfillment = array(
 				"fulfillmentText" => $response,
-				"outputContexts" => $outputContexts,
+				"outputContexts" => $outputContext,
 			);
 			echo(json_encode($fulfillment));
 			die;

@@ -54,6 +54,7 @@
 			# code ...
 			break;
 		case 'submodel':
+			$response = "Hello";
 			if(empty($params['submodel'])) {
 				$response = "No me mandaste ningun modelo, ¿Cual es el model de tu carro?";
 			}

@@ -25,7 +25,6 @@
 			$responseMsg['pre'] = "Ahorita tenemos disponibles siguientes piezas disponibles en estas tiendas: \n";
 			$foundPart = false;
 			$responseMsg['store'] ='';
-			$partsNameEnglish = [];
 			$partExist = false;
 			foreach ($stores as $store) {
 				$storeId = $store['id'];
@@ -42,8 +41,7 @@
 						}
 
 						if($part['quantity'] > 0) {
-							$partsNameEnglish[] = $partName;
-							$responseMsg['store'] .=  $quantity.' ['.sizeof($partsNameEnglish).'] con precio de '.  $part['price']['cost']."\n";
+							$responseMsg['store'] .=  $quantity.' '.$partName.' con precio de '.  $part['price']['cost']."\n";
 							$foundPart = true;
 						}
 					}

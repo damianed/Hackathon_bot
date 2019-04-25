@@ -113,7 +113,7 @@
 							"yearId" => $solicitedYear,
 							"makeId"=> $solicitedMakeId,
 							"modelId"=> $solicitedModelId,
-							"subModelId"=> $submodelId,
+							"subModelId"=> $solicitedSubmodelId,
 							"engineId"=> $engineId,
 							"engineParams" => $engineParams
 						],
@@ -126,7 +126,7 @@
 					$responseMsg['store'] ='';
 					foreach ($stores as $store) {
 						$storeId = $store['id'];
-						$availableEngines = $partsTech->requestQuote($searchParams, $storeId);
+						$parts = $partsTech->requestQuote($searchParams, $storeId);
 						if(sizeof($parts) > 0) {
 							$storeData['parts'] = [];
 							$responseMsg['store'] .= "En la tienda de " . $store['supplierName'] ." que esta en ". $store['name']." tienen : \n";

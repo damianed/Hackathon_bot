@@ -247,7 +247,9 @@
 							$response
 						),
 					),
-					"quickReplies" => $buttons,
+						array(
+							"quickReplies" => $buttons,
+						),
 					),
 				],
 				"outputContexts" => $outputContexts,

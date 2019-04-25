@@ -26,10 +26,12 @@
 			$foundPart = false;
 			$responseMsg['store'] ='';
 			$partsNameEnglish = [];
+			$partExist = false;
 			foreach ($stores as $store) {
 				$storeId = $store['id'];
 				$parts = $partsTech->requestQuote($searchParams, $storeId)['parts'];
 				if(sizeof($parts) > 0) {
+					$partExist = true;
 					$storeData['parts'] = [];
 					$responseMsg['store'] .= "En la tienda de " . $store['supplierName'] ." que esta en ". $store['name']." tienen : \n";
 					foreach ($parts as $part) {
@@ -54,27 +56,12 @@
 			}
 
 			if($responseMsg['store'] == '') {
-				$response = "Lo siento, pero parece que esa pieza no esta disponible o no exsite";
-			} else {
-				$textToTranslate = '';
-				foreach ($partsNameEnglish as $partName) {
-					$textToTranslate .= $partName . '|';
-				}
-				$textToTranslate = rtrim($textToTranslate,"|");
-
-				$res = translate($textToTranslate, 'en-es');
-				$strNamesSpanish = $res['text'][0];
-
-				$partNamesSpanish = explode('|', $strNamesSpanish);
-				if(sizeof($partNamesSpanish) > 0) {
-					for ($i=0; $i <sizeof($partNamesSpanish) ; $i++) {
-						$responseMsg['store'] = str_replace('['.($i+1).']',$partName, $responseMsg['store']);
-					}
+				if($partExist) {
+					$response = "Lo siento, pero el producto con ese numero de parte no esta disponible por el momento";
 				} else {
-					$responseMsg['store'] = str_replace('['.(1).']',$strNamesSpanish, $responseMsg['store']);
+					$response = "Disculpa pero ese numero de parte no pertenece a ningun producto que tengamos registrado";
 				}
-
-
+			} else {
 				$response = $responseMsg['pre'] . $responseMsg['store'];
 			}
 

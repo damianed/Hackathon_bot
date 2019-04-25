@@ -45,7 +45,7 @@
 			$fulfillment = array(
 				"fulfillmentText" => $response
 			);
-			echo json_encode($fulfillment);
+			die(json_encode($fulfillment));
 			break;
 		case 'engine':
 			# code ...

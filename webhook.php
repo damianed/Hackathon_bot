@@ -63,8 +63,9 @@
 				$textToTranslate = rtrim($textToTranslate,"|");
 
 				$strNamesSpanish = translate($textToTranslate, 'en-es')['text'];
+				die($strNamesSpanish);
 				$partNamesSpanish = explode('|', $strNamesSpanish);
-			
+
 				for ($i=0; $i <sizeof($partNamesSpanish) ; $i++) {
 					$responseMsg['store'] = str_replace('['.($i+1).']',$partName, $responseMsg['store']);
 				}

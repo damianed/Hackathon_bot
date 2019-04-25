@@ -22,14 +22,18 @@
 		$images = $moreInfoContext['parameters']['images'];
 		$text = array();
 		$partNum = $params['part_number'];
-		$texts[] = array (
-			'card' =>
-			array (
-				'title' => 'card title',
-				'subtitle' => 'card text',
-				'imageUri' => $images[$partNum],
-			),
-		);
+		if($images[$partNum] != ''){
+			$texts[] = array (
+				'card' =>
+				array (
+					'title' => 'card title',
+					'subtitle' => 'card text',
+					'imageUri' => $images[$partNum],
+				),
+			);
+		}else{
+			$$texts[] = ['text' => ['text' => ["No contamos con ninguna imagen para ese numero de parte"]]];
+		}
 		$fulfillment = array(
 			"fulfillmentMessages" => $texts
 		);

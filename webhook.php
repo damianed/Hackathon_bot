@@ -266,13 +266,14 @@
 			}
 			$subModels = $partsTech->getSubModels($year, $makeId, $modelId, '');
 			if(sizeof($subModels) < 2){
-				$outputContexts[] =	array(
+				$outputContexts[1]['parameters']["submodelId"] = array(
 										"name" => $requestJson["session"]."/contexts/engineSelection",
 										"lifespanCount" => 1,
 										"parameters"=> array(
 											"submodelId" => $subModels[0]['submodelId'],
 										)
 									);
+				$outputContexts[1]['parameters']["submodelId"] =	$subModels[0]['submodelId'];
 				$availableEngines = $partsTech->getEngines($year, $makeId, $modelId, $subModels[0]['submodelId']);
 				$response = 'Que motor tiene tu carro: ';
 				foreach ($availableEngines as $key => $engine) {

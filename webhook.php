@@ -39,8 +39,8 @@
 						}
 
 						if($part['quantity'] > 0) {
+							$partName = translate($partName, 'es', 'en');
 							$responseMsg['store'][] =  $quantity.' '.$partName.' con precio de '.  $part['price']['cost']."\n";
-							die(json_encode(translate($partName, 'es')));
 							$foundPart = true;
 						}
 					}
@@ -136,8 +136,8 @@
 								}
 
 								if($part['quantity'] > 0) {
+									$partname = translate($partName, 'es', 'en');
 									$responseMsg['store'] .=  $quantity.' '.$partName.' con precio de '.  $part['price']['cost']."\n";
-									die(json_encode(translate($partName, 'es')));
 									$foundPart = true;
 								}
 							}
@@ -165,10 +165,10 @@
 				$response = "No me mandaste ninguna version, ¿Cual es la version de tu carro?";
 			}
 			else {
-				$solicitedYear = $outputContexts[1]['parameters']['year'];
-				$solicitedMakeId  = $outputContexts[1]['parameters']['makeId'];
-				$solicitedModelId  = $outputContexts[1]['parameters']['modelId'];
-				$solicitedSubmodel = $outputContexts[1]['parameters']['submodel'];
+				$solicitedYear = $outputContexts[2]['parameters']['year'];
+				$solicitedMakeId  = $outputContexts[2]['parameters']['makeId'];
+				$solicitedModelId  = $outputContexts[2]['parameters']['modelId'];
+				$solicitedSubmodel = $outputContexts[2]['parameters']['submodel'];
 				$submodels = $partsTech->getSubModels($solicitedYear, $solicitedMakeId, $solicitedModelId, "");
 				if (count($submodels) < 2) {
 					$outputContexts[] =	array(

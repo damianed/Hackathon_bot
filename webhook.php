@@ -122,6 +122,7 @@
 			}
 			$subModels = $partsTech->getSubModels($year, $make, $modelId, '');
 			$response = "¿De cual versión es: ";
+			file_put_contents("./log", json_encode($subModels, JSON_PRETTY_PRINT));
 			foreach($subModels as $index=>$subModel){
 				$response .= $subModels[$index]["submodelName"];
 				//if($index < sizeof($subModels) - 1){

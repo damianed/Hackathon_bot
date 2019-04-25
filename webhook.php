@@ -240,14 +240,14 @@
 			}
 
 			$fulfillment = array(
-				"fulfillmentMessages" => [
-					"text" => [
-						"text" => [
+				"fulfillmentMessages" => array(
+					"text" => array(
+						"text" => array(
 							$response
-						]
-					],
+						),
+					),
 					"quickReplies" => $buttons,
-				],
+				),
 				"outputContexts" => $outputContexts,
 			);
 			echo(json_encode($fulfillment));

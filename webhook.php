@@ -121,7 +121,7 @@
 				echo(json_encode($fulfillment));
 				break;
 			}
-			$subModels = $partsTech->getSubModels($year, $make, $modelId, '');
+			$subModels = $partsTech->getSubModels($year, $makeid, $modelId, '');
 			$response = "¿De cual versión es: ";
 			die(json_encode($subModels, JSON_PRETTY_PRINT));
 			foreach($subModels as $index=>$subModel){

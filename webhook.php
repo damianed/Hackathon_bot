@@ -63,9 +63,8 @@
 				$textToTranslate = rtrim($textToTranslate,"|");
 
 				$strNamesSpanish = translate($textToTranslate, 'en-es')['text'];
-
+				die($strNamesSpanish);
 				$partNamesSpanish = explode('|', $strNamesSpanish);
-
 				$count = 1;
 				foreach ($partNamesSpanish as $partName) {
 					 $responseMsg['store'] = str_replace('['.$count.']',$partName, $responseMsg['store']);
@@ -116,7 +115,7 @@
 					foreach ($submodels as $key => $submodel) {
 						if ($key < count($submodels)) {
 							$response .= $submodel['submodelName'].', ';
-						} 
+						}
 						else {
 							$response .= 'o '.$submodel['submodelName'];
 						}
@@ -128,7 +127,7 @@
 						$response = 'Que motor tiene tu carro: ';
 						if ($key < count($availableEngines)) {
 							$response .= $engine['engineName'].', ';
-						} 
+						}
 						else {
 							$response .= 'o '.$engine['engineName'];
 						}

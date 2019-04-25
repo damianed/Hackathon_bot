@@ -38,7 +38,9 @@
 			foreach ($partsByStore as $storeData) {
 				$response .= "En la tienda de " . $storeData['supplierName'] ." que esta en ". $storeData['name'].": \n";
 				foreach ($storeData['parts'] as $part) {
-					$response .= 'Hay '.$part['quantity'].' '.$part['partName']. ' con precio de '. $part['price']."\n";
+					if($part['quantity'] > 0) {
+						$response .= 'Hay '.$part['quantity'].' '.$part['partName']. ' con precio de '. $part['price']."\n";
+					}
 				}
 			}
 
@@ -54,7 +56,7 @@
 		case 'submodel':
 			if(empty($params['submodel'])) {
 				$response = "No me mandaste ningun modelo, ¿Cual es el model de tu carro?";
-			} 
+			}
 			else {
 				$solicitedYear = $params['outputContexts'][1]['parameters']['year'];
 				$solicitedMake  = $params['outputContexts'][0]['parameters']['submodel'];
@@ -64,7 +66,7 @@
 					if ($makeName == $solicitedMake) {
 						$id = $make[$key]['makeId'];
 					}
-				}		
+				}
 				if (empty($id)) {
 					$solicitedModel = $params['outputContexts'][1]['parameters']['model'];
 					$submodels = $partsTech.getSubModels($year, $solicitedMake, $solicitedModel, "");
@@ -77,7 +79,7 @@
 					$response = 'Cual es el Motor de tu carro?';
 				}
 			}
-			
+
 			$fulfillment = array(
 				"fulfillmentText" => $response
 			);

@@ -346,6 +346,7 @@
 						$response .= ", ";
 					}
 				}
+				$buttons[] = $subModel["submodelName"];
 			}
 			$response .= "?";
 			$fulfillment = array (

@@ -138,7 +138,7 @@
 			}
 
 			$fulfillment = array(
-				"fulfillmentText" => $response
+				"fulfillmentText" => $availableEngines
 			);
 			echo(json_encode($fulfillment));
 			break;

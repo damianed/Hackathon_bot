@@ -62,7 +62,7 @@
 				}
 				$textToTranslate = rtrim($textToTranslate,"|");
 
-				$strNamesSpanish = translate($textToTranslate, 'en-es');
+				$strNamesSpanish = translate($textToTranslate, 'en-es')['text'];
 
 				$partNamesSpanish = explode('|', $strNamesSpanish);
 				foreach ($partNamesSpanish as $index => $partName) {

@@ -184,7 +184,7 @@
 			$outputcontexts = $requestJson['queryResult']["outputContexts"];
 
 			$outputcontexts[] =	array(
-									"name" => $requestJson["session"]."contexts/engineSelection",
+									"name" => $requestJson["session"]."/contexts/engineSelection",
 									"lifespanCount" => 1,
 									"parameters"=> array(
 										"submodelId" => $subModels[0]['submodelId'],

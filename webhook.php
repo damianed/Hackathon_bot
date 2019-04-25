@@ -21,22 +21,29 @@
 
 			$searchParams = [	"partNumber" => [$params['part_number']]];
 			$response = "Ahorita tenemos disponibles siguientes piezas disponibles en estas tiendas: \n";
+			$foundPart = false;
 			foreach ($stores as $store) {
 				$storeId = $store['id'];
 				$parts = $partsTech->requestQuote($searchParams, $storeId)['parts'];
 				if(sizeof($parts) > 0) {
 					$storeData['parts'] = [];
-					$response .= "En la tienda de " . $store['supplierName'] ." que esta en ". $store['name']." tienen : \n";
+					$response = "En la tienda de " . $store['supplierName'] ." que esta en ". $store['name']." tienen : \n";
 					foreach ($parts as $part) {
-						$partName = translate($part['partName'], 'en-es');
+						// $partName = translate($part['partName'], 'en-es');
 						$partName = $part['partName'];
 						$quantity = $part['quantity'];
 						if($quantity == 0) {
 							$quantity = $part['availability'][0]['quantity'];
 						}
 						// $storeData['parts'][] = ['partName' => $partName, 'price' => $part['price']['list'], 'quantity' => $part['availability'][0]['quantity']];
+						if($part['quantity'] > 0) {
 							$response .=  $quantity.' '.$partName. ' con precio de '.  $part['price']['cost']."\n";
+							$foundPart = true;
+						}
 					}
+
+				}
+				if($foundPart) {
 					break;
 				}
 			}

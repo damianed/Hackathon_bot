@@ -158,6 +158,4 @@ class PartsTech
 		return $resp;
 	}
 }
-
-
  ?>

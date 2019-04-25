@@ -36,6 +36,7 @@
 					}
 				}
 				// $partsByStore[] = $storeData;
+				// break;
 			}
 
 			// foreach ($partsByStore as $storeData) {
@@ -120,9 +121,9 @@
 				echo(json_encode($fulfillment));
 				break;
 			}
-			$subModels = $partsTech->getSubModels($year, $make, $modelId, '');
+			$subModels = $partsTech->getSubModels($year, $makeid, $modelId, '');
 			$response = "¿De cual versión es: ";
-			file_put_contents("./log", json_encode($subModels, JSON_PRETTY_PRINT));
+			die(json_encode($subModels, JSON_PRETTY_PRINT));
 			foreach($subModels as $index=>$subModel){
 				$response .= $subModels[$index]["submodelName"];
 				//if($index < sizeof($subModels) - 1){

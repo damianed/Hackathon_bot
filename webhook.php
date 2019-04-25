@@ -180,9 +180,8 @@
 			$outputcontexts = $requestJson['queryResult']["outputContexts"];
 
 			$outputcontexts[] =	array(
-									"name" => $requestJson['queryResult']["session"]."contexts/engineSelection",
+									"name" => $requestJson["session"]."contexts/engineSelection",
 									"lifespanCount" => 1,
-									"parameters"=> array()
 								);
 			if(sizeof($subModels) < 2){
 				$response = "¿Cual es el motor que necesita?";

@@ -13,37 +13,40 @@
 
 			break;
 		case 'search_part_number':
-			$stores = $partsTech->getStore();
-
-			$partsByStore = [];
+			$stores = [
+				['id' => 149918,"name" => "Avenida Felipe Ángeles No. 333-A, Col. Progreso, Guadalajara, JA 44730, MX", "supplierName" => "NAPA Auto Parts" ],
+				['id' => 149914,"name" => "CALZ. DEL EJERCITO #1396, COL. QUINTA VELARDE, Guadalajara, JA 44430, MX", "supplierName" => "AutoZone" ],
+				['id' => 149919,"name" => "Av. Revolución #705, Col. General Real, Guadalajara, JA 44890, MX", "supplierName" => "WORLDPAC" ]
+			];
 
 			$searchParams = [	"partNumber" => [$params['part_number']]];
 			$response = "Ahorita tenemos disponibles siguientes piezas disponibles en estas tiendas: \n";
+			$foundPart = false;
 			foreach ($stores as $store) {
 				$storeId = $store['id'];
 				$parts = $partsTech->requestQuote($searchParams, $storeId)['parts'];
-				$storeData = [];
-				$storeData['name'] = $store['name'];
-				$storeData['supplierName'] = $store['supplier']['name'];
-				$storeData['parts'] = [];
-				$response .= "En la tienda de " . $storeData['supplierName'] ." que esta en ". $storeData['name']."tienen : \n";
-				foreach ($parts as $part) {
-					// $partName = translate($part['partName'], 'en-es');
-					$partName = $part['partName'];
-					// $storeData['parts'][] = ['partName' => $partName, 'price' => $part['price']['list'], 'quantity' => $part['availability'][0]['quantity']];
-					if($part['quantity'] > 0) {
-						$response .=  $part['availability'][0]['quantity'].' '.$partName. ' con precio de '.  $part['price']['list']."\n";
+				if(sizeof($parts) > 0) {
+					$storeData['parts'] = [];
+					$response .= "En la tienda de " . $store['supplierName'] ." que esta en ". $store['name']." tienen : \n";
+					foreach ($parts as $part) {
+						// $partName = translate($part['partName'], 'en-es');
+						$partName = $part['partName'];
+						$quantity = $part['quantity'];
+						if($quantity == 0) {
+							$quantity = $part['availability'][0]['quantity'];
+						}
+						// $storeData['parts'][] = ['partName' => $partName, 'price' => $part['price']['list'], 'quantity' => $part['availability'][0]['quantity']];
+						if($part['quantity'] > 0) {
+							$response .=  $quantity.' '.$partName. ' con precio de '.  $part['price']['cost']."\n";
+							$foundPart = true;
+						}
 					}
+
 				}
-				// $partsByStore[] = $storeData;
-				break;
+				if($foundPart) {
+					break;
+				}
 			}
-
-			// foreach ($partsByStore as $storeData) {
-			// 	foreach ($storeData['parts'] as $part) {
-			// 	}
-			// }
-
 
 			$fulfillment = array(
 				"fulfillmentText" => $response
@@ -52,7 +55,7 @@
 			break;
 		case 'engine':
 			# code ...
-			break;
+ 			break;
 		case 'submodel':
 			$response = "Hello";
 			if(empty($params['submodel'])) {
@@ -124,7 +127,7 @@
 			}
 			$subModels = $partsTech->getSubModels($year, $makeId, $modelId, '');
 			$response = "¿De cual versión es: ";
-			
+
 			foreach($subModels as $index=>$subModel){
 				$response .= $subModel["submodelName"];
 				if($index == sizeof($subModels) - 2){

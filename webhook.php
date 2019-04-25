@@ -18,6 +18,7 @@
 			$partsByStore = [];
 
 			$searchParams = [	"partNumber" => [$params['part_number']]];
+			$response = "Ahorita tenemos disponibles siguientes piezas disponibles en estas tiendas: \n";
 			foreach ($stores as $store) {
 				$storeId = $store['id'];
 				$parts = $partsTech->requestQuote($searchParams, $storeId)['parts'];
@@ -25,24 +26,22 @@
 				$storeData['name'] = $store['name'];
 				$storeData['supplierName'] = $store['supplier']['name'];
 				$storeData['parts'] = [];
+				$response .= "En la tienda de " . $storeData['supplierName'] ." que esta en ". $storeData['name']."tienen : \n";
 				foreach ($parts as $part) {
 					// $partName = translate($part['partName'], 'en-es');
 					$partName = $part['partName'];
-					$storeData['parts'][] = ['partName' => $partName, 'price' => $part['price']['list'], 'quantity' => $part['availability'][0]['quantity']];
-				}
-				$partsByStore[] = $storeData;
-				break;
-			}
-
-			$response = "Ahorita tenemos disponibles siguientes piezas disponibles en estas tiendas: \n";
-			foreach ($partsByStore as $storeData) {
-				$response .= "En la tienda de " . $storeData['supplierName'] ." que esta en ". $storeData['name'].": \n";
-				foreach ($storeData['parts'] as $part) {
+					// $storeData['parts'][] = ['partName' => $partName, 'price' => $part['price']['list'], 'quantity' => $part['availability'][0]['quantity']];
 					if($part['quantity'] > 0) {
-						$response .= 'Hay '.$part['quantity'].' '.$part['partName']. ' con precio de '. $part['price']."\n";
+						$response .=  $part['availability'][0]['quantity'].' '.$partName. ' con precio de '.  $part['price']['list']."\n";
 					}
 				}
+				// $partsByStore[] = $storeData;
 			}
+
+			// foreach ($partsByStore as $storeData) {
+			// 	foreach ($storeData['parts'] as $part) {
+			// 	}
+			// }
 
 
 			$fulfillment = array(
@@ -54,6 +53,7 @@
 			# code ...
 			break;
 		case 'submodel':
+			$response = "Hello";
 			if(empty($params['submodel'])) {
 				$response = "No me mandaste ningun modelo, ¿Cual es el model de tu carro?";
 			}

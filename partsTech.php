@@ -189,19 +189,5 @@ foreach ($stores as $store) {
 	}
 }
 
-$response = "Ahorita tenemos disponibles siguientes piezas disponibles en estas tiendas: \n";
-foreach ($partsByStore as $storeData) {
-	$response .= "En la tienda de " . $storeData['supplierName'] ." que esta en ". $storeData['name'].": \n";
-	foreach ($storeData['parts'] as $part) {
-		if($part['quantity'] > 0) {
-			$response .= 'Hay '.$part['quantity'].' '.$part['partName']. ' con precio de '. $part['price']."\n";
-		}
-	}
-}
-$end_time = microtime(true);
-
-$execution_time = ($end_time - $start_time);
-
-echo " Execution time of script = ".$execution_time." sec";
 
  ?>

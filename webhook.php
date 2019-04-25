@@ -188,6 +188,7 @@
 						$response .= 'o '.$engine['engineName'];
 					}
 				}
+				$response .= '?';
 				$fulfillment = array(
 					"fulfillmentText" => $response,
 					"outputContexts" => $outputContexts,

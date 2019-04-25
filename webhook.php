@@ -67,9 +67,6 @@
 				);
 			}
 
-			$fulfillment = array(
-				"fulfillmentText" => $response
-			);
 			echo json_encode($fulfillment);
 			break;
 		case 'engine':

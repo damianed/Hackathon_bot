@@ -130,7 +130,7 @@
 								}
 
 								if($part['quantity'] > 0) {
-									$partname = $translate($partName, 'es', 'en');
+									$partname = translate($partName, 'es', 'en');
 									$responseMsg['store'] .=  $quantity.' '.$partName.' con precio de '.  $part['price']['cost']."\n";
 									$foundPart = true;
 								}

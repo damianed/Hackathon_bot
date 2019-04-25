@@ -73,18 +73,12 @@
 				$solicitedMakeId  = $outputContexts[1]['parameters']['makeId'];
 				$solicitedModelId  = $outputContexts[1]['parameters']['modelId'];
 				$solicitedSubmodel = $outputContexts[1]['parameters']['submodel'];
-				$sentSubmodelId = $outputContexts[1]['parameters']['submodelId'];
-				if (empty($sentSubmodelId)) {
-					$submodels = $partsTech->getSubModels($solicitedYear, $solicitedMakeId, $solicitedModelId, "");
-					foreach ($submodels as $submodel) {
-						$submodelName = $submodel["submodelName"];
-						if ($solicitedSubmodel == $submodelName) {
-							$submodelId  = $submodel['submodelId'];
-						}
+				$submodels = $partsTech->getSubModels($solicitedYear, $solicitedMakeId, $solicitedModelId, "");
+				foreach ($submodels as $submodel) {
+					$submodelName = $submodel["submodelName"];
+					if ($solicitedSubmodel == $submodelName) {
+						$submodelId  = $submodel['submodelId'];
 					}
-				}
-				else {
-					$submodelId = $sentSubmodelId;
 				}
 				if (empty($submodelId)) {
 					$response = 'No encontre una version de tu carro con ese nombre, ¿Seguro que lo escribiste bien? Las versiones de tu carro son: ';

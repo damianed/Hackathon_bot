@@ -102,10 +102,11 @@
 						$modelId = $model['modelId'];
 					}
 				}
+				$solicitedSubmodel = $ouputContexts[1]['parameters']['submodel'];
 				$submodels = $partsTech->getSubModels($solicitedYear, $makeId, $modelId, "");
 				foreach ($submodels as $submodel) {
 					$submodelName = $submodel["submodelName"];
-					if ($solicitedModel == $submodelName) {
+					if ($solicitedSubmodel == $submodelName) {
 						$submodelId  = $submodel['submodelId'];
 					}
 				}

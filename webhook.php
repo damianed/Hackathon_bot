@@ -10,7 +10,7 @@
 	$partsTech = new PartsTech();
 	switch ($intentDisplayName) {
 		case 'partImage':
-		
+
 			$moreInfoContext = $outputContexts[0];
 			foreach ($outputContexts as $key => $oc) {
 				if(strpos($oc['name'], 'contexts/moreinfo') !== false) {
@@ -177,7 +177,7 @@
 					foreach ($stores as $store) {
 						$storeId = $store['id'];
 						$parts = $partsTech->requestQuote($searchParams, $storeId)['parts'];
-						$imagenes = array();
+						$images = array();
 						if(sizeof($parts) > 0) {
 							$storeData['parts'] = [];
 							$responseMsg['store'][] = "En la tienda de " . $store['supplierName'] ." que esta en ". $store['name']." tienen : \n";
@@ -185,7 +185,7 @@
 								$partName = $part['partName'];
 								$quantity = $part['quantity'];
 								$partNum = $part['partNumber'];
-								$imagenes[$partNum] = sizeof($part['images']) > 0 ? $part['images'][0]['preview'] : '';
+								$images[$partNum] = sizeof($part['images']) > 0 ? $part['images'][0]['preview'] : '';
 								if($quantity == 0) {
 									$quantity = $part['availability'][0]['quantity'];
 								}

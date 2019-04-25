@@ -50,7 +50,7 @@
 				}
 				$responseMsg['store'] ='';
 			}
-			if($response['store'] == '') {
+			if($responseMsg['store'] == '') {
 				$response = "Lo siento, pero parece que esa pieza no esta disponible o no exite";
 			} else {
 				$response = $responseMsg['pre'] . $responseMsg['store'];

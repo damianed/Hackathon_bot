@@ -115,7 +115,7 @@
 					"fulfillmentText" => "No encontre la marca ".$makeName.", ¿Estas seguro que lo escribiste bien?"
 				);
 				echo(json_encode($fulfillment));
-				break;
+				die;
 			}
 
 			$models = $partsTech->getModels($year, $makeId, '');
@@ -131,7 +131,7 @@
 					"fulfillmentText" => "No encontre el modelo ".$modelName.", ¿Estas seguro que lo escribiste bien?"
 				);
 				echo(json_encode($fulfillment));
-				break;
+				die;
 			}
 			$subModels = $partsTech->getSubModels($year, $makeId, $modelId, '');
 			$response = "¿De cual versión es: ";

@@ -237,7 +237,7 @@
 						else {
 							$response .= 'o '.$engine['engineName'];
 						}
-						array_push($buttons["title"], $engine['Pieza']);
+						array_push($buttons["title"], "Pieza");
 						array_push($buttons["reply"], $engine['engineName']);
 					}
 				}

@@ -28,8 +28,8 @@
 				$storeData['parts'] = [];
 				$response .= "En la tienda de " . $storeData['supplierName'] ." que esta en ". $storeData['name']."tienen : \n";
 				foreach ($parts as $part) {
-					$partName = translate($part['partName'], 'en-es');
-					// $partName = $part['partName'];
+					// $partName = translate($part['partName'], 'en-es');
+					$partName = $part['partName'];
 					// $storeData['parts'][] = ['partName' => $partName, 'price' => $part['price']['list'], 'quantity' => $part['availability'][0]['quantity']];
 					if($part['quantity'] > 0) {
 						$response .=  $part['availability'][0]['quantity'].' '.$partName. ' con precio de '.  $part['price']['list']."\n";

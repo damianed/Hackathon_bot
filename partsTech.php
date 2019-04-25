@@ -159,8 +159,5 @@ class PartsTech
 	}
 }
 
-$part = new PartsTech();
-
-echo json_encode($part->getStore());
 
  ?>

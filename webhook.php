@@ -369,7 +369,7 @@
 						),
 					  ),
 					),
-				"outputContexts" => $outputContext,
+				"outputContexts" => $outputContexts,
 			);
 				echo(json_encode($fulfillment));
 				die;
@@ -389,7 +389,7 @@
 			$response .= "?";
 			$fulfillment = array(
 				"fulfillmentText" => $response,
-				"outputContexts" => $outputContext,
+				"outputContexts" => $outputContexts,
 			);
 			echo(json_encode($fulfillment));
 			die;

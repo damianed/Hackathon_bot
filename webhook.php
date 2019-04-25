@@ -92,7 +92,7 @@
 			}
 
 			$fulfillment = array(
-				"fulfillmentText" => $solicitedYear
+				"fulfillmentText" => $params
 			);
 			echo(json_encode($fulfillment));
 			break;

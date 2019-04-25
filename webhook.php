@@ -93,7 +93,7 @@
 			}
 
 			$fulfillment = array(
-				"fulfillmentText" => $response
+				"fulfillmentText" => $solicitedYear.$solicitedModel.$solicitedMake
 			);
 			echo(json_encode($fulfillment));
 			break;

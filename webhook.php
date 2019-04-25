@@ -38,7 +38,7 @@
 						}
 						// $storeData['parts'][] = ['partName' => $partName, 'price' => $part['price']['list'], 'quantity' => $part['availability'][0]['quantity']];
 						if($part['quantity'] > 0) {
-							$partName = translate($part['partName'], 'en-es');
+							// $partName = translate($part['partName'], 'en-es');
 							$responseMsg['store'] .=  $quantity.' '.$partName. ' con precio de '.  $part['price']['cost']."\n";
 							$foundPart = true;
 						}

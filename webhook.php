@@ -78,18 +78,12 @@
 				die();
 			}
 			else {
-				$outputContext = $outputContexts[1];
-				foreach ($outputContexts as $oc) {
-					if(strpos($oc['name'], 'contexts/part_search') !== false) {
-						$outputContext = $oc;
-						break;
-					}
-				}
-				$partName = $outputContext['parameters']['partName'];
-				$solicitedYear = $outputContext['parameters']['year'];
-				$solicitedMakeId  = $outputContext['parameters']['makeId'];
-				$solicitedModelId  = $outputContext['parameters']['modelId'];
-				$solicitedSubmodelId = $outputContext['parameters']['submodelId'];
+
+				$partName = $outputContexts[1]['parameters']['partName'];
+				$solicitedYear = $outputContexts[1]['parameters']['year'];
+				$solicitedMakeId  = $outputContexts[1]['parameters']['makeId'];
+				$solicitedModelId  = $outputContexts[1]['parameters']['modelId'];
+				$solicitedSubmodelId = $outputContexts[1]['parameters']['submodelId'];
 				$solicitedEngine = $params['engine'];
 				$engines = $partsTech->getEngines($solicitedYear, $solicitedMakeId, $solicitedModelId, $solicitedSubmodelId);
 				foreach ($engines as $engine) {
@@ -237,36 +231,37 @@
 						else {
 							$response .= 'o '.$engine['engineName'];
 						}
-						array_push($buttons["title"], "Pieza");
-						array_push($buttons["reply"], $engine['engineName']);
+						array_push($buttons, $engine['engineName']);
 					}
 				}
 				$response .= '?';
 			}
 
-			$fulfillment =array (
-							'fulfillmentMessages' => 
-							array (
-							0 => 
-							array (
-								'text' => 
-									array (
-									'text' => 
-										array (
-											0 => $response
-										),
-								),
-							),
-							1 => 
-								array (
-									'quickReplies' => 
-									array (
-									'quickReplies' => $buttons
-									),
-								),
-							),
-						"outputContexts" => $outputContexts,
-					);
+			$fulfillment =
+				array (
+					'fulfillmentMessages' => 
+					array (
+					  0 => 
+					  array (
+						'text' => 
+						array (
+						  'text' => 
+						  array (
+							0 => $response
+						  ),
+						),
+					  ),
+					  1 => 
+					  array (
+						'quickReplies' => 
+						array (
+						  'quickReplies' => 
+							$buttons
+						),
+					  ),
+					),
+				"outputContexts" => $outputContexts,
+			);
 			echo(json_encode($fulfillment));
 			break;
 		case 'SearchPartName':
@@ -348,25 +343,8 @@
 				}
 			}
 			$response .= "?";
-			$fulfillment = array (
-				'fulfillmentMessages' => array (
-					0 => 
-					array (
-						'text' => 
-							array (
-							'text' => 
-								array (
-									0 => $response
-								),
-						),
-					),
-					1 => 
-						array (
-							'quickReplies' => array (
-									'quickReplies' => $buttons
-							),
-						),
-				),
+			$fulfillment = array(
+				"fulfillmentText" => $response,
 				"outputContexts" => $outputContexts,
 			);
 			echo(json_encode($fulfillment));

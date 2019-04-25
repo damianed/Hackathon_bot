@@ -398,6 +398,7 @@
 				}
 			}
 			$response .= "?";
+			$outputContexts[$ocid] = $outputContext;
 			$fulfillment = array(
 				"fulfillmentText" => $response,
 				"outputContexts" => $outputContexts,

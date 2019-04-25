@@ -24,7 +24,7 @@
 			$responseMsg = [];
 			$responseMsg['pre'] = "Ahorita tenemos disponibles siguientes piezas disponibles en estas tiendas: \n";
 			$foundPart = false;
-			$responseMsg['store'] ='';
+			$responseMsg['store'] =[];
 			foreach ($stores as $store) {
 				$storeId = $store['id'];
 				$parts = $partsTech->requestQuote($searchParams, $storeId)['parts'];
@@ -39,8 +39,8 @@
 						}
 
 						if($part['quantity'] > 0) {
-							$responseMsg['store'] .=  $quantity.' '.$partName.' con precio de '.  $part['price']['cost']."\n";
-							die(json_encode(translate($partName, 'es')));
+							$partName = translate($partName, 'es', 'en');
+							$responseMsg['store'][] =  $quantity.' '.$partName.' con precio de '.  $part['price']['cost']."\n";
 							$foundPart = true;
 						}
 					}
@@ -49,13 +49,19 @@
 				if($foundPart) {
 					break;
 				}
-				$responseMsg['store'] ='';
+				$responseMsg['store'] =[];
 			}
 
 			if($responseMsg['store'] == '') {
 					$response = "Lo siento, pero el producto con ese numero de parte no esta disponible por el momento";
 			} else {
-				$response = $responseMsg['pre'] . $responseMsg['store'];
+				$texts = [];
+				foreach ($responseMsg['store'] as $text) {
+					$texts[] = ['text' => $text];
+				}
+				$response = [
+					'text' => $texts
+				];
 			}
 
 			$fulfillment = array(
@@ -130,8 +136,8 @@
 								}
 
 								if($part['quantity'] > 0) {
+									$partname = translate($partName, 'es', 'en');
 									$responseMsg['store'] .=  $quantity.' '.$partName.' con precio de '.  $part['price']['cost']."\n";
-									die(json_encode(translate($partName, 'es')));
 									$foundPart = true;
 								}
 							}

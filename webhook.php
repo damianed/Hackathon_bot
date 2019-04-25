@@ -54,14 +54,17 @@
 
 			if($responseMsg['store'] == '') {
 					$response = "Lo siento, pero el producto con ese numero de parte no esta disponible por el momento";
+					$fulfillment = array(
+						"fulfillmentText" => $response
+					);
 			} else {
 				$texts = [];
 				foreach ($responseMsg['store'] as $text) {
-					$texts[] = ['text' => $text];
+					$texts[] = ['text' => ['text' => [$text]]];
 				}
-				$response = [
-					'text' => $texts
-				];
+				$fulfillment = array(
+					"fulfillmentMessages" => json_encode($texts)
+				);
 			}
 
 			$fulfillment = array(

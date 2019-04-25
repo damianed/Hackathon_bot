@@ -122,7 +122,7 @@
 					}
 				}
 				else {
-					$availableEngines = $partsTech->getModels($solicitedYear, $makeId, $modelId, $submodelId);
+					$availableEngines = $partsTech->getEngines($solicitedYear, $makeId, $modelId, $submodelId);
 					$response = 'Que motor tiene tu carro: ';
 					foreach ($availableEngines as $key => $engine) {
 						if ($key < count($availableEngines)) {
@@ -137,7 +137,7 @@
 			}
 
 			$fulfillment = array(
-				"fulfillmentText" => $availableEngines
+				"fulfillmentText" => $response
 			);
 			echo(json_encode($fulfillment));
 			break;

@@ -16,12 +16,12 @@ class PartsTech
 				'user' =>
 				[
 					'id' => 'hackteam_4',
-					'key' => 'b17934a273b74f83ad81c9eeed997d84',
+					'key' => 'USER_KEY',
 				],
 				'partner' =>
 				[
 					'id' => 'beta_bosch',
-					'key' => '4700fc1c26dd4e54ab26a0bc1c9dd40d',
+					'key' => 'PARTER_KEY',
 				],
 			],
 		];

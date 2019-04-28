@@ -1,10 +1,7 @@
 <?php
-	$apiKey = "AIzaSyCTWpoN9Ruy4GuwIpRShSvrH188lZzIUm0";
-
-
 	// $text: the text you want to translate
-	// $lang: The translation direction. Example: es-en
-	// Language codes: https://tech.yandex.com/translate/doc/dg/concepts/api-overview-docpage/#api-overview__languages
+	// $target: The language you what to translate to. Exmple: en
+	// $source: The original language of the text. Example: es
 	require_once ('vendor/autoload.php');
 	use \Statickidz\GoogleTranslate;
 	function translate($text, $target, $source)
@@ -12,25 +9,5 @@
 		$trans = new GoogleTranslate();
 		$result = $trans->translate($source, $target, $text);
 		return $result;
-		// global $apiKey;
-		// $ch = curl_init();
-
-		// $url = "https://translation.googleapis.com/language/translate/v2?target=$lang&key=$apiKey&q=$text";
-		// // $params = array(
-		// // 	'key' => $apiKey,
-		// // 	'text' => $text,
-		// // 	'target' => $lang);
-
-		// // //set the url, number of POST vars, POST data
-		// // curl_setopt($ch,CURLOPT_URL, $url);
-		// // curl_setopt($ch,CURLOPT_POST, true);
-		// // curl_setopt($ch,CURLOPT_POSTFIELDS, http_build_query($params));
-		// // curl_setopt($ch,CURLOPT_RETURNTRANSFER, true);
-
-		// $resp = file_get_contents($url);
-		// // Close request to clear up some resources
-		// //curl_close($ch);
-
-		// return json_decode($resp, true);
 	}
 ?>
